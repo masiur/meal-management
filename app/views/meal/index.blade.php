@@ -8,35 +8,34 @@
                     {{ $title }}
                     <span class="pull-right">
 
-                            <a class="btn btn-success btn-sm btn-new-user" href="{{ URL::route('month.create') }}">Create New Month</a>
+                            <a class="btn btn-success btn-sm btn-new-user" href="{{ URL::route('month.meal.create', ['id' => $id]) }}">Create New Entry</a>
 
                     </span>
                 </header>
                 <div class="panel-body">
-                    @if(count($months))
+                    @if(count($mealcounts))
                         <table class="display table table-bordered table-striped" id="example">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Cost</th>
+                                <th>Member</th>
+                                <th>Meal Count</th>
+                                <th>Balance</th>
                             <!--     <th>Status</th>
                                 <th>Owner</th> -->
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($months as $month)
+                            @foreach($mealcounts as $mealcount)
                                 <tr>
-                                    <td>{{ $month->id }}</td>
-                                    <td>{{ $month->name }}</td>
-                                    <td>{{ $month->cost }}</td>
+                                    <td>{{ $mealcount->id }}</td>
+                                    <td>{{ $mealcount->member_id }}</td>
+                                    <td>{{ $mealcount->count }}</td>
+                                    <td>{{ $mealcount->balance }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>
-                                        
-                                        <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.edit', array('id' => $month->id)) }}">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $month->id }}">Delete</a>
+                                        <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.edit', array('id' => $mealcount->id)) }}">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $mealcount->id }}">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -61,7 +60,7 @@
                     Are you sure to delete?
                 </div>
                 <div class="modal-footer">
-                    {{ Form::open(array('route' => array('month.delete', 0), 'method'=> 'delete', 'class' => 'deleteForm')) }}
+                    {{ Form::open(array('route' => array('month.meal.delete', 0), 'method'=> 'delete', 'class' => 'deleteForm')) }}
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     {{ Form::submit('Yes, Delete', array('class' => 'btn btn-success')) }}
                     {{ Form::close() }}
@@ -94,7 +93,7 @@
 
             $(document).on("click", ".deleteBtn", function() {
                 var deleteId = $(this).attr('deleteId');
-                var url = "<?php echo URL::route('month.index'); ?>";
+                var url = "<?php echo URL::route('month.bazar.index'); ?>";
                 $(".deleteForm").attr("action", url+'/'+deleteId);
             });
         });

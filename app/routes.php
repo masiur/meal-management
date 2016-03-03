@@ -55,8 +55,17 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('month/{id}/bazar/store', array('as' => 'month.bazar.store', 'uses' => 'BazarController@store'));
 	Route::get('month/bazar/edit/{id}', array('as' => 'month.bazar.edit', 'uses' => 'BazarController@edit'));
 	Route::put('month/bazar/update/{id}', array('as' => 'month.bazar.update', 'uses' => 'BazarController@update'));
-	Route::delete('month/{id}/bazar/delete/{id}', array('as' => 'month.bazar.delete', 'uses' => 'BazarController@destory'));
+	Route::delete('month/bazar/delete/{id}', array('as' => 'month.bazar.delete', 'uses' => 'BazarController@destory'));
 
+	// Meal Count
+	Route::get('month/{id}/meals', array('as' => 'month.meal.index', 'uses' => 'MealCountController@index'));
+	Route::get('month/{id}/meal/create', array('as' => 'month.meal.create', 'uses' => 'MealCountController@create'));
+	// Route::get('month/meal/show/{id}', array('as' => 'month.meal.show', 'uses' => 'MealCountController@show'));
+	
+	Route::post('month/{id}/meal/store', array('as' => 'month.meal.store', 'uses' => 'MealCountController@store'));
+	Route::get('month/meal/edit/{id}', array('as' => 'month.meal.edit', 'uses' => 'MealCountController@edit'));
+	Route::put('month/meal/update/{id}', array('as' => 'month.meal.update', 'uses' => 'MealCountController@update'));
+	Route::delete('month/meal/delete/{id}', array('as' => 'month.meal.delete', 'uses' => 'MealCountController@destory'));
 
 
 });

@@ -89,7 +89,7 @@ class BazarController extends \BaseController {
 		$members = Member::lists('name', 'id');
 		$bazar = Bazar::find($id);
 		return View::make('bazar.edit')
-				->with('title','Create Bazars')->with('members',$members)
+				->with('title','Edit Bazars')->with('members',$members)
 				->with('bazar',$bazar);
 	}
 
@@ -122,7 +122,7 @@ class BazarController extends \BaseController {
 		$bazar->date = $data['date'];
 
 		if($bazar->save()){
-			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Added Successfully.");
+			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Updated Successfully.");
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}

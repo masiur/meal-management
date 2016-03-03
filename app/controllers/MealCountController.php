@@ -8,9 +8,14 @@ class MealCountController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		//
+		$mealcounts = MealCount::whereMonthId($id)->get();
+
+		return View::make('meal.index')
+				->with('title','Meal Counts')
+				->with('mealcounts',$mealcounts)
+				->with('id',$id);
 	}
 
 	/**
@@ -19,9 +24,12 @@ class MealCountController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($id)
 	{
-		//
+		$members = Member::lists('name', 'id');
+		return View::make('meal.create')
+				->with('title','Create Bazars')->with('members',$members)
+				->with('id',$id);
 	}
 
 	/**
@@ -30,12 +38,14 @@ class MealCountController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
 		$rules = [
-			'card_id' => 'required|numeric',
-			'amount' => 'required|integer|min:1',
-			];
+			'month_id' => 'required',
+			'member_id' => 'required',
+			'count' => 'required',
+			'balance' => 'required'
+		];
 
 		$data = Input::all();
 		$validator = Validator::make($data, $rules);
@@ -43,9 +53,14 @@ class MealCountController extends \BaseController {
 		if($validator->fails()){
 			return Redirect::back()->withInput()->withErrors($validator);
 		}
+		$mealcount = new MealCount;
+		$mealcount->month_id = $data['month_id'];
+		$mealcount->member_id = $data['member_id'];
+		$mealcount->count = $data['count'];
+		$mealcount->balance = $data['balance'];
 
-		if($cart_details->save()){
-			return Redirect::route('cart.index')->with('success',"Added Successfully.");
+		if($mealcount->save()){
+			return Redirect::route('month.meal.index',[$data['month_id']])->with('success',"Added Successfully.");
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
@@ -71,7 +86,11 @@ class MealCountController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$members = Member::lists('name', 'id');
+		$mealcount = MealCount::find($id);
+		return View::make('meal.edit')
+				->with('title','Edit Meal Info')->with('members',$members)
+				->with('mealcount',$mealcount);
 	}
 
 	/**
@@ -83,7 +102,29 @@ class MealCountController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = [
+			'month_id' => 'required',
+			'member_id' => 'required',
+			'count' => 'required',
+			'balance' => 'required'
+		];
+
+		$data = Input::all();
+		$validator = Validator::make($data, $rules);
+
+		if($validator->fails()){
+			return Redirect::back()->withInput()->withErrors($validator);
+		}
+		$mealcount =  MealCount::find($id);
+		$mealcount->month_id = $data['month_id'];
+		$mealcount->member_id = $data['member_id'];
+		$mealcount->count = $data['count'];
+		$mealcount->balance = $data['balance'];
+
+		if($mealcount->save()){
+			return Redirect::route('month.meal.index',[$data['month_id']])->with('success',"Updated Successfully.");
+		}
+		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
 
 	/**
