@@ -13,58 +13,38 @@
                       </a>
                   </li>
 
-                  {{-- Task Manager --}}
-                  <li>
+                  {{-- Member --}}
 
-                      <a href="#">
+                  <li class="sub-menu">
+
+                      <a href="javascript:;">
                           <i class="fa fa-tasks"></i>
-                          <span>Task Manager</span>
+                          <span>Member</span>
                       </a>
-                  </li>
-                  {{-- Carrier Accounts --}}
-                  <li>
+                      <ul class="sub"> 
+                        <li><a href="{{ route('member.index') }}">All Members</a></li>  
+                        <li><a href="{{ route('member.create') }}">Create a Member</a></li>
+                        
+                      </ul>
 
-                      <a href="#">
-                          <i class="fa fa-plane"></i>
-                          <span>Carrier Accounts</span>
+                  </li> 
+
+                  {{-- Month --}}
+
+                  <li class="sub-menu">
+
+                      <a href="javascript:;">
+                          <i class="fa fa-tasks"></i>
+                          <span>Month</span>
                       </a>
-                  </li>
+                      <ul class="sub"> 
+                        <li><a href="{{ route('month.index') }}">All Months</a></li>  
+                        <li><a href="{{ route('month.create') }}">Create a Month</a></li>
+                        
+                      </ul>
 
-                  {{-- Shipments --}}
-                  <li>
-
-                      <a href="#">
-                          <i class="fa fa-truck"></i>
-                          <span>Shipments</span>
-                      </a>
-                  </li>
-
-                  {{-- Customers --}}
-                  <li>
-
-                      <a href="#">
-                          <i class="fa fa-user"></i>
-                          <span>Customers</span>
-                      </a>
-                  </li>
-
-                  {{-- Salespersons --}}
-                  <li>
-
-                      <a href="#">
-                          <i class="fa fa-flash"></i>
-                          <span>Sales persons</span>
-                      </a>
-                  </li>
-
-                  {{-- Staff Users --}}
-                  <li>
-
-                      <a href="#">
-                          <i class="fa fa-users"></i>
-                          <span>Staff Users</span>
-                      </a>
-                  </li>
+                  </li> 
+                  
 
                   {{-- Roles & Permissions --}}
                   <li>
