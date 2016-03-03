@@ -7,7 +7,7 @@
                 <header class="panel-heading">
                     {{ $title }}
                     <span class="pull-right">
-                            <a class="btn btn-success btn-sm" href="{{ URL::route('month.meal.index', ['id' => $mealcount->month_id]) }}">Meal Info</a>
+                            <a class="btn btn-success btn-sm" href="{{ URL::route('month.meal.index', ['id' => $mealcount->month_id]) }}">All Meal Info</a>
                             
 					</span>
                 </header>
