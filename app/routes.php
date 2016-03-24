@@ -13,6 +13,9 @@
 
 Route::get('/','HomeController@showWelcome');
 
+Route::post('post/store', array('uses' => 'PostController@store'));
+
+
 Route::group(['before' => 'guest'], function(){
 	Route::controller('password', 'RemindersController');
 	Route::get('login', ['as'=>'login','uses' => 'AuthController@login']);

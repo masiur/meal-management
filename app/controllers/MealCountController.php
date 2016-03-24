@@ -10,7 +10,7 @@ class MealCountController extends \BaseController {
 	 */
 	public function index($id)
 	{
-		$mealcounts = MealCount::whereMonthId($id)->get();
+		$mealcounts = MealCount::with(['member'])->whereMonthId($id)->get();
 
 		return View::make('meal.index')
 				->with('title','Meal Counts')

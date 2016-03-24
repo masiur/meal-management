@@ -32,7 +32,7 @@
                                     <td>{{ $bazar->id }}</td>
                                     <td>{{ $bazar->amount }}</td>
                                     <td>{{ $bazar->date }}</td>
-                                    <td>{{ $bazar->member_id }}</td>
+                                    <td>{{ $bazar->member->name }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.bazar.edit', array('id' => $bazar->id)) }}">Edit</a>
                                         <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $bazar->id }}">Delete</a>

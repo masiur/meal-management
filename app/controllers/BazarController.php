@@ -10,7 +10,7 @@ class BazarController extends \BaseController {
 	 */
 	public function index($id)
 	{
-		$bazars = Bazar::whereMonthId($id)->get();
+		$bazars = Bazar::with(['member'])->whereMonthId($id)->get();
 
 		return View::make('bazar.index')
 				->with('title','Bazars')

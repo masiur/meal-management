@@ -30,7 +30,7 @@
                             @foreach($mealcounts as $mealcount)
                                 <tr>
                                     <td>{{ $mealcount->id }}</td>
-                                    <td>{{ $mealcount->member_id }}</td>
+                                    <td>{{ $mealcount->member->name }}</td>
                                     <td>{{ $mealcount->count }}</td>
                                     <td>{{ $mealcount->balance }}</td>
                                     <td class="text-center">

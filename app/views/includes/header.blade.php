@@ -30,4 +30,23 @@
           <script src="js/html5shiv.js"></script>
           <script src="js/respond.min.js"></script>
         <![endif]-->
+        <style type="text/css">
+            #posts{
+                margin-top: 10px;
+                height: 500px;
+                overflow-y: scroll;
+            }
+            .post{
+                border: 1px solid rgb(204, 236, 232);
+                margin-bottom: 10px;
+            }
+            .post p{
+                color: rgb(234, 85, 187);
+                font-size: 1.5em;
+                padding: 5%;
+            }
+            .post h2{
+                color: rgb(33, 14, 89);
+            }
+        </style>
     </head>
