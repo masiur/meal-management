@@ -17,7 +17,42 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		return View::make('home')->with('title', 'Home');
+		$month = Month::orderBy('id', 'desc')->first();
+
+		$total_meal_count = 0.00;
+
+		$total_bazar = $month->cost;
+		
+		$bazars = Bazar::with('member')->whereMonthId($month->id)->get();
+		
+		$meal_counts = MealCount::whereMonthId($month->id)->get();
+
+		foreach ($bazars as $bazar) {
+			$total_bazar +=  $bazar->amount;
+		}
+
+		foreach ($meal_counts as $meal) {
+			$total_meal_count +=  $meal->count;
+		}
+		
+		$meal_rate = $total_bazar/$total_meal_count;
+		$GLOBALS['month_id'] = $month->id;
+		$members = Member::with(['mealCount' => function($query){
+				    $query->where('month_id', $GLOBALS['month_id']);
+
+				}])->get();
+
+		foreach ($members as $member) {
+
+			$member->has = $member->meal_count->balance - ($member->meal_count->count * $meal_rate);
+		}
+		$members;
+
+
+		return View::make('home')->with('title', 'Home')
+							->with('members', $members)
+							->with('bazars', $bazars)
+							->with('meal_rate', $meal_rate);
 	}
 
 }
