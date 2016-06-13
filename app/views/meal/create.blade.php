@@ -17,16 +17,16 @@
                     {{ Form::hidden('month_id', $id, array('class' => 'form-control')) }}
 
                     <div class="form-group">
-                        {{ Form::label('count', 'Meal Count : ', array('class' => 'col-md-2 control-label')) }}
+                        {{ Form::label('count', 'Meal Count: ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::text('count', null, array('class' => 'form-control',  'placeholder' => 'Meal Count', 'required')) }}
+                            {{ Form::text('count', null, array('class' => 'form-control',  'placeholder' => 'Cumulative Meal of a Member', 'required')) }}
                         </div>
                     </div>
 
                      <div class="form-group">
                         {{ Form::label('balance', 'Balance : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::text('balance', null, array('class' => 'form-control',  'placeholder' => 'Balance', 'required')) }}
+                            {{ Form::text('balance', null, array('class' => 'form-control',  'placeholder' => 'ম্যানেজারের কাছে জমা', 'required')) }}
                         </div>
                     </div>
                     <div class="form-group">

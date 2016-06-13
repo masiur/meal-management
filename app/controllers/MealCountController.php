@@ -28,7 +28,7 @@ class MealCountController extends \BaseController {
 	{
 		$members = Member::lists('name', 'id');
 		return View::make('meal.create')
-				->with('title','Create Bazars')->with('members',$members)
+				->with('title','Create Cumulative Meal')->with('members',$members)
 				->with('id',$id);
 	}
 
@@ -89,7 +89,7 @@ class MealCountController extends \BaseController {
 		$members = Member::lists('name', 'id');
 		$mealcount = MealCount::find($id);
 		return View::make('meal.edit')
-				->with('title','Edit Meal Info')->with('members',$members)
+				->with('title','Edit Cumulative Meal Info')->with('members',$members)
 				->with('mealcount',$mealcount);
 	}
 
