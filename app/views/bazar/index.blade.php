@@ -33,11 +33,12 @@
                                     <td>{{ $bazar->id }}</td>
                                     <td>{{ $bazar->amount }}</td>
                                     <td>@if(!is_null($bazar->details))
-                                        <ol>
-                                            @foreach(json_decode($bazar->details) as $item)
-                                                <li> {{ $item->name }} : {{ $item->price }}</li>
-                                            @endforeach
-                                        </ol>
+                                        {{--<ol>--}}
+                                            {{--@foreach(json_decode($bazar->details) as $item)--}}
+                                                {{--<li> {{ $item->name }} : {{ $item->price }}</li>--}}
+                                            {{--@endforeach--}}
+                                        {{--</ol>--}}
+                                            {{ json_decode($bazar->details) }}
                                         @endif
                                     </td>
                                     <td>{{ $bazar->date }}</td>
