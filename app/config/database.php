@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'mealmanagement',
+			'database'  => 'meal',
 			'username'  => 'root',
 			'password'  => 'sust',
 			'charset'   => 'utf8',
