@@ -13,7 +13,7 @@
                       </a>
                   </li>
                   <li>
-                      <a href="{{ URL::route('/') }}" target="_blank">
+                      <a href="{{ URL::to('/') }}" target="_blank">
                           <i class="fa fa-home"></i>
                           <span>Home</span>
                       </a>
