@@ -31,6 +31,12 @@
                                 <tr>
                                     <td>{{ $bazar->id }}</td>
                                     <td>{{ $bazar->amount }}</td>
+                                    <td><ol>
+                                            @foreach(json_decode($bazar->details) as $item)
+                                                <li> {{ $item->name }} : {{ $item->price }}</li>
+                                            @endforeach
+                                        </ol>
+                                    </td>
                                     <td>{{ $bazar->date }}</td>
                                     <td>{{ $bazar->member->name }}</td>
                                     <td class="text-center">

@@ -38,6 +38,13 @@
                             </div>
                         </div>
 
+                       <div class="form-group">
+                           {{ Form::label('details', 'Details : ', array('class' => 'col-md-2 control-label')) }}
+                           <div class="col-md-4">
+                               {{ Form::textarea('details',  json_decode($bazar->details), array('class' => 'form-control', 'rows' => 10,  'placeholder' => 'Json ', 'required')) }}
+                           </div>
+                       </div>
+
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
                                 {{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

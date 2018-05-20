@@ -58,6 +58,7 @@ class BazarController extends \BaseController {
 		$bazar->member_id = $data['member_id'];
 		$bazar->amount = $data['amount'];
 		$bazar->date = $data['date'];
+		$bazar->details = json_encode($data['details']);
 
 		if($bazar->save()){
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Added Successfully.");
@@ -120,6 +121,7 @@ class BazarController extends \BaseController {
 		$bazar->member_id = $data['member_id'];
 		$bazar->amount = $data['amount'];
 		$bazar->date = $data['date'];
+        $bazar->details = json_encode($data['details']);
 
 		if($bazar->save()){
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Updated Successfully.");
