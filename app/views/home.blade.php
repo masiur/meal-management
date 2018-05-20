@@ -3,7 +3,7 @@
 @section('content')
      <div class="container">
      		<div class="page-header">
-			  <h1 class="text-info" align="center">চলতি মাসের হিসাব</h1>
+			  <h1 class="text-info" align="center">চলতি মাসের হিসাব ( {{ $month->name }} )</h1>
 			</div>
 			<div class="row">
 				<div class="col-md-7">
@@ -37,6 +37,7 @@
 					</table>
 					<div class="page-header">
 					  <h2 class="text-info" align="center"> চলতি মাসের বাজারের অবস্থা </h2>
+						<h3 class="text-info">মেস বাজার : {{ $monthCost }} BDT</h3>
 					</div>
 					<table class="table">
 					  <thead>

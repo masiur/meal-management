@@ -22,6 +22,7 @@ class HomeController extends BaseController {
 		$total_meal_count = 0.00;
 
 		$total_bazar = $month->cost;
+		$monthCost = $total_bazar;
 		
 		$bazars = Bazar::with('member')->whereMonthId($month->id)->get();
 		
@@ -52,6 +53,8 @@ class HomeController extends BaseController {
 		return View::make('home')->with('title', 'Home')
 							->with('members', $members)
 							->with('bazars', $bazars)
+							->with('monthCost', $monthCost)
+							->with('month', $month)
 							->with('meal_rate', $meal_rate);
 	}
 
