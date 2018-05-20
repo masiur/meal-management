@@ -19,6 +19,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Amount</th>
+                                <th>Details</th>
                                 <th>Date</th>
                                 <th>Who ?</th>
                             <!--     <th>Status</th>

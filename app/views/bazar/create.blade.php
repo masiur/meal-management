@@ -39,7 +39,7 @@
                     <div class="form-group">
                         {{ Form::label('details', 'Details : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::textarea('details',  null, array('class' => 'form-control', 'rows' => 10, 'placeholder' => 'Json ', 'required')) }}
+                            {{ Form::textarea('details',  null, array('class' => 'form-control', 'rows' => 10, 'placeholder' => "{  \n   {  \n      \"name\":\"PP\",\n      \"price\":10\n   },\n   {  \n      \"name\":\"ffff\",\n      \"price\":10\n   }\n}", 'required')) }}
                         </div>
                     </div>
 
