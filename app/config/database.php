@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'meal',
 			'username'  => 'root',
-			'password'  => 'sust',
+			'password'  => 'iit!@#123!@#',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
