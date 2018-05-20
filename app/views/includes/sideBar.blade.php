@@ -12,36 +12,42 @@
                           <span>Dashboard</span>
                       </a>
                   </li>
+                  <li>
+                      <a href="{{ URL::route('/') }}" target="_blank">
+                          <i class="fa fa-home"></i>
+                          <span>Home</span>
+                      </a>
+                  </li>
 
                   {{-- Member --}}
 
-                  <li class="sub-menu">
+                  <li>
 
-                      <a href="javascript:;">
+                      <a href="{{ route('member.index') }}">
                           <i class="fa fa-tasks"></i>
-                          <span>Member</span>
+                          <span>Members</span>
                       </a>
-                      <ul class="sub"> 
-                        <li><a href="{{ route('member.index') }}">All Members</a></li>  
-                        <li><a href="{{ route('member.create') }}">Create a Member</a></li>
-                        
-                      </ul>
+                      {{--<ul class="sub"> --}}
+                        {{--<li><a href="{{ route('member.index') }}">All Members</a></li>  --}}
+                        {{--<li><a href="{{ route('member.create') }}">Create a Member</a></li>--}}
+                        {{----}}
+                      {{--</ul>--}}
 
                   </li> 
 
                   {{-- Month --}}
 
-                  <li class="sub-menu">
+                  <li >
 
-                      <a href="javascript:;">
+                      <a href="{{ route('month.index') }}">
                           <i class="fa fa-tasks"></i>
-                          <span>Month</span>
+                          <span>Months</span>
                       </a>
-                      <ul class="sub"> 
-                        <li><a href="{{ route('month.index') }}">All Months</a></li>  
-                        <li><a href="{{ route('month.create') }}">Create a Month</a></li>
-                        
-                      </ul>
+                      {{--<ul class="sub"> --}}
+                        {{--<li><a href="{{ route('month.index') }}">All Months</a></li>  --}}
+                        {{--<li><a href="{{ route('month.create') }}">Create a Month</a></li>--}}
+                        {{----}}
+                      {{--</ul>--}}
 
                   </li> 
                   

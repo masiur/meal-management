@@ -50,7 +50,7 @@
 						<tr>
 							<td>{{$bazar->member->name}}</td>
 							<td>{{number_format($bazar->amount, 2)}}
-								<button type="button" class="btn btn-secondary btn-xs example-popover" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ json_decode($bazar->details) }}">
+								<button type="button" class="btn btn-secondary btn-xs example-popover" data-container="body" data-toggle="popover" data-placement="right" data-content="'{{ json_decode($bazar->details) }}'">
 									Details
 								</button>
 							</td>
