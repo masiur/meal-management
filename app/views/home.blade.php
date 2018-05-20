@@ -37,7 +37,7 @@
 					</table>
 					<div class="page-header">
 					  <h2 class="text-info" align="center"> চলতি মাসের বাজারের অবস্থা </h2>
-						<h3 class="text-info">মেস বাজার : {{ $monthCost }} BDT</h3>
+						<h4 class="text-info">মেস বাজার : {{ $monthCost }} BDT</h4>
 					</div>
 					<table class="table">
 					  <thead>
