@@ -31,11 +31,13 @@
                                 <tr>
                                     <td>{{ $bazar->id }}</td>
                                     <td>{{ $bazar->amount }}</td>
-                                    <td><ol>
+                                    <td>@if(!is_null($bazar->details))
+                                        <ol>
                                             @foreach(json_decode($bazar->details) as $item)
                                                 <li> {{ $item->name }} : {{ $item->price }}</li>
                                             @endforeach
                                         </ol>
+                                        @endif
                                     </td>
                                     <td>{{ $bazar->date }}</td>
                                     <td>{{ $bazar->member->name }}</td>
