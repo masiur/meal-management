@@ -1,8 +1,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="Modern Meal System by SUST CSE 2011 & 2012 Batch">
+        <meta name="author" content="Nayeem Iqubal Joy & Masiur Rahman Siddiki">
         <meta name="keyword" content="">
         <link rel="shortcut icon" href="img/favicon.png">
 
