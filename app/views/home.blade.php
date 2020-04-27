@@ -81,7 +81,7 @@
 					</form>
 				</div>
 				<div id="posts">
-                    <?php $posts = Post::orderBy('id', 'desc')->get(); ?>
+                    <?php $posts = $month->posts; ?>
 					@foreach($posts as $post)
 						<div class="post">
 							<h2 class="text-center">{{nl2br(e($post->owner))}} , বলেছেন</h2>
@@ -94,6 +94,8 @@
 			</div>
 		</div>
 	</div>
+
+	<footer>Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> & <a target="_blank" href="https://www.linkedin.com/in/masiurcse/">Masiur</a> </footer>
 
 @stop
 
@@ -116,7 +118,8 @@
                     url: baseUrl + "/post/store",
                     data: {
                         owner : owner.val(),
-                        post : post.val()
+                        post : post.val(),
+                        month_id : '{{ $month->id }}'
                     },
                     dataType  : 'json',
                     success: function(response){

@@ -46,6 +46,7 @@ class PostController extends \BaseController {
 		$post = new Post;
 		$post->owner = (isset($data['owner']) && !empty($data['owner'])) ? $data['owner'] : 'বেনামী';
 		$post->post = $data['post'];
+		$post->month_id = $data['month_id'];
 		$post->save();
 		$post->post = nl2br(e($post->post));
 		$post->owner = nl2br(e($post->owner));

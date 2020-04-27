@@ -27,7 +27,7 @@ class AddDetailsToBazarTable extends Migration {
 	{
 		Schema::table('bazars', function(Blueprint $table)
 		{
-			//
+            $table->dropColumn(['details']);
 		});
 	}
 

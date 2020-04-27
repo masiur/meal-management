@@ -1,7 +1,8 @@
     <!--footer start-->
     <footer class="site-footer">
           <div class="text-center">
-              2013 &copy; FlatLab by VectorLab.
+              Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> & <a target="_blank" href="https://www.linkedin.com/in/masiurcse/">Masiur</a>
+
               <a href="#" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>
