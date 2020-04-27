@@ -106,7 +106,7 @@ class BazarController extends \BaseController {
 		$rules = [
 			'amount' => 'required',
 			'month_id' => 'required',
-			'member_id' => 'required',
+//			'member_id' => 'required',
 			'date' => 'required'
 		];
 
@@ -118,7 +118,7 @@ class BazarController extends \BaseController {
 		}
 		$bazar = Bazar::find($id);
 		$bazar->month_id = $data['month_id'];
-		$bazar->member_id = $data['member_id'];
+//		$bazar->member_id = $data['member_id'];
 		$bazar->amount = $data['amount'];
 		$bazar->date = $data['date'];
         $bazar->details = json_encode($data['details']);

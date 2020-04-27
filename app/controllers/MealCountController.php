@@ -104,7 +104,7 @@ class MealCountController extends \BaseController {
 	{
 		$rules = [
 			'month_id' => 'required',
-			'member_id' => 'required',
+//			'member_id' => '',
 			'count' => 'required',
 			'balance' => 'required'
 		];
@@ -117,7 +117,7 @@ class MealCountController extends \BaseController {
 		}
 		$mealcount =  MealCount::find($id);
 		$mealcount->month_id = $data['month_id'];
-		$mealcount->member_id = $data['member_id'];
+//		$mealcount->member_id = $data['member_id'];
 		$mealcount->count = $data['count'];
 		$mealcount->balance = $data['balance'];
 
