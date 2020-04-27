@@ -17,16 +17,19 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		$month = Month::orderBy('id', 'desc')->first();
+		$monthName = Input::get('month');
+	    $month = $monthName ? Month::where('name', strtolower($monthName))->first() : Month::orderBy('id', 'desc')->first();
 
 		$total_meal_count = 0.00;
 
 		$total_bazar = $month->cost;
 		$monthCost = $total_bazar;
+
+        $monthId = $month->id;
 		
-		$bazars = Bazar::with('member')->whereMonthId($month->id)->get();
+		$bazars = Bazar::with('member')->whereMonthId($monthId)->get();
 		
-		$meal_counts = MealCount::whereMonthId($month->id)->get();
+		$meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
 
 		foreach ($bazars as $bazar) {
 			$total_bazar +=  $bazar->amount;
@@ -36,22 +39,35 @@ class HomeController extends BaseController {
 			$total_meal_count +=  $meal->count;
 		}
 		
-		$meal_rate = $total_bazar/$total_meal_count;
-		$GLOBALS['month_id'] = $month->id;
-		$members = Member::with(['mealCount' => function($query){
-				    $query->where('month_id', $GLOBALS['month_id']);
+		$meal_rate = (int) $total_meal_count != 0 ? $total_bazar/$total_meal_count : 0;
 
-				}])->get();
+//		$GLOBALS['month_id'] = $month->id;
 
-		foreach ($members as $member) {
+//        $memberForSelectedMonth = $meal_counts->lists('member_id');
+////		  $members = Member::whereIn('id', $memberForSelectedMonth)->with('mealCount')->get();
+//        $members = Member::whereIn('id', $memberForSelectedMonth)
+//             ->with(['mealCount' => function($query) use($monthId){
+//				    $query->where('month_id', $monthId)->first();
+//				}])
+//             ->get();
+//
+//		foreach ($members as $member) {
+////            return $memberMealDetails = $member->meal_count->('month_id', $monthId)->first();
+////		    $member->member_meal_details = $memberMealDetails;
+//			$member->has = $memberMealDetails->balance - ($memberMealDetails->count * $meal_rate);
+//		}
+//		$members;
 
-			$member->has = $member->meal_count->balance - ($member->meal_count->count * $meal_rate);
-		}
-		$members;
+        $mealDetailsAllMembers = $meal_counts;
+        foreach ($meal_counts as $mealCountPerMember) {
+            $mealCountPerMember->balancePlusOrMinusToBeGiven = $mealCountPerMember->balance - ($mealCountPerMember->count * $meal_rate);
+        }
+        $mealDetailsAllMembers;
 
 
 		return View::make('home')->with('title', 'Home')
-							->with('members', $members)
+//							->with('members', $members)
+							->with('mealDetailsAllMembers', $mealDetailsAllMembers)
 							->with('bazars', $bazars)
 							->with('monthCost', $monthCost)
 							->with('month', $month)

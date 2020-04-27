@@ -34,7 +34,7 @@
                         <div class="form-group">
                             {{ Form::label('member_id', 'Member : ', array('class' => 'col-md-2 control-label')) }}
                             <div class="col-md-4">
-                                {{ Form::select('member_id', $members,null, array('class' => 'form-control', 'required')) }}
+                                {{ Form::select('member_id', $members,null, array('class' => 'form-control', 'required', 'disabled')) }}
                             </div>
                         </div>
 

@@ -4,7 +4,7 @@ class Member extends \Eloquent {
     protected $fillable = [];
 
     public function mealCount(){
-        return $this->hasOne('MealCount');
+        return $this->hasMany('MealCount');
     }
 
     // public function bazars(){

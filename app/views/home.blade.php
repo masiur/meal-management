@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 		<div class="page-header">
-			<h1 class="text-info" align="center">চলতি মাসের হিসাব ( {{ $month->name }} )</h1>
+			<h1 class="text-info" align="center">( {{ $month->name }} ) মাসের হিসাব </h1>
 		</div>
 		<div class="row">
 			<div class="col-md-7">
@@ -21,15 +21,15 @@
 					<th>মেস (পাবে / দিবে)</th>
 					</thead>
 					<tbody>
-					@foreach($members as $member)
+					@foreach($mealDetailsAllMembers as $mealDetailsPerMember)
 						<tr>
-							<td>{{$member->name}}</td>
-							<td>{{number_format($member->meal_count->count, 2)}}</td>
-							<td>{{number_format($member->meal_count->balance, 2)}} BDT</td>
-							@if($member->has < 0)
-								<td class="danger">{{number_format($member->has, 2)}} BDT</td>
+							<td>{{$mealDetailsPerMember->member->name}}</td>
+							<td>{{number_format($mealDetailsPerMember->count, 2)}}</td>
+							<td>{{number_format($mealDetailsPerMember->balance, 2)}} BDT</td>
+							@if($mealDetailsPerMember->balancePlusOrMinusToBeGiven < 0)
+								<td class="danger">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@else
-								<td class="success">{{number_format($member->has, 2)}} BDT</td>
+								<td class="success">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@endif
 						</tr>
 					@endforeach

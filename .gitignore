@@ -6,7 +6,7 @@ vendor/
 /app/config/local
 /app/config/staging
 /app/config/production
-
+app/config/database.php
 # Composer
 composer.phar
 composer.lock
