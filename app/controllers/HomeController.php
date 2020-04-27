@@ -20,6 +20,10 @@ class HomeController extends BaseController {
 		$monthName = Input::get('month');
 	    $month = $monthName ? Month::where('name', strtolower($monthName))->first() : Month::orderBy('id', 'desc')->first();
 
+	    if(!$month) {
+            return "<h1>Oops! Bad Request</h1>";
+        }
+
 		$total_meal_count = 0.00;
 
 		$total_bazar = $month->cost;
