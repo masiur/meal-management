@@ -53,11 +53,11 @@ return array(
 		),
 
 		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'c1meal',
-			'username'  => 'root',
-			'password'  => '',
+            'driver'    => getenv('db_driver'),
+            'host'      => getenv('db_host'), // equivalent $_ENV['db_host']
+            'database'  => getenv('db_name'),
+            'username'  => getenv('db_user'),
+            'password'  => getenv('db_pass'),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

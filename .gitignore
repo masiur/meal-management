@@ -11,6 +11,8 @@ app/config/database.php
 composer.phar
 composer.lock
 
+.env.php
+
 # OS
 .DS_Store
 .idea/
