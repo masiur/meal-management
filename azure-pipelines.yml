@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: 'f98b7ce6-24b9-4f12-92ea-29b0a84ac764'
   imageRepository: 't'
   containerRegistry: 'masiuracr.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: '**/Dockerfile1'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
