@@ -6,6 +6,13 @@
         <meta name="keyword" content="">
         <link rel="shortcut icon" href="img/favicon.png">
 
+    <!--
+            Masiur Rahman Siddiki
+
+          C1 - The Royal Apartment
+           Meal System
+           -->
+
         <title>{{ $title }} - {{ Config::get('customConfig.names.siteName')}}</title>
 
         <!-- Bootstrap core CSS -->

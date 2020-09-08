@@ -31,9 +31,9 @@ class HomeController extends BaseController {
 
         $monthId = $month->id;
 		
-		$bazars = Bazar::with('member')->whereMonthId($monthId)->get();
+         $bazars = Bazar::with('member')->whereMonthId($monthId)->get();
 		
-		$meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
+        $meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
 
 		foreach ($bazars as $bazar) {
 			$total_bazar +=  $bazar->amount;
@@ -43,7 +43,7 @@ class HomeController extends BaseController {
 			$total_meal_count +=  $meal->count;
 		}
 		
-		$meal_rate = (int) $total_meal_count != 0 ? $total_bazar/$total_meal_count : 0;
+		$meal_rate = $total_meal_count != 0 ? number_format($total_bazar/$total_meal_count, 2) : 0;
 
 //		$GLOBALS['month_id'] = $month->id;
 
@@ -64,15 +64,18 @@ class HomeController extends BaseController {
 
         $mealDetailsAllMembers = $meal_counts;
         foreach ($meal_counts as $mealCountPerMember) {
-            $mealCountPerMember->balancePlusOrMinusToBeGiven = $mealCountPerMember->balance - ($mealCountPerMember->count * $meal_rate);
+            $mealCountPerMember->total_bazar_per_head = Bazar::where('month_id', $monthId)->where('member_id', $mealCountPerMember->member_id)->sum('amount');
+            $mealCountPerMember->balancePlusOrMinusToBeGiven =  ($mealCountPerMember->total_bazar_per_head + $mealCountPerMember->balance) - ($mealCountPerMember->count * $meal_rate)  ;
+//            $mealCountPerMember->total_bazar_per_head = 20;
         }
         $mealDetailsAllMembers;
-
 
 		return View::make('home')->with('title', 'Home')
 //							->with('members', $members)
 							->with('mealDetailsAllMembers', $mealDetailsAllMembers)
 							->with('bazars', $bazars)
+							->with('total_bazar_this_month', $total_bazar)
+							->with('total_meal_this_month', $total_meal_count)
 							->with('monthCost', $monthCost)
 							->with('month', $month)
 							->with('meal_rate', $meal_rate);

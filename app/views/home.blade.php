@@ -17,22 +17,37 @@
 					<thead>
 					<th>নাম</th>
 					<th>মিল সংখ্যা</th>
-					<th>জমা </th>
-					<th>মেস (পাবে / দিবে)</th>
+					<th>বাজার + অন্যান্য = মোট জমা</th>
+					<th>মেস (পাবে/দিবে)</th>
 					</thead>
 					<tbody>
+					<?php $plus_minus_balancing = 0; ?>
 					@foreach($mealDetailsAllMembers as $mealDetailsPerMember)
 						<tr>
 							<td>{{$mealDetailsPerMember->member->name}}</td>
 							<td>{{number_format($mealDetailsPerMember->count, 2)}}</td>
-							<td>{{number_format($mealDetailsPerMember->balance, 2)}} BDT</td>
+							<td>
+								{{number_format($mealDetailsPerMember->total_bazar_per_head, 0)}} +
+								{{number_format($mealDetailsPerMember->balance, 0)}} =
+								{{ $mealDetailsPerMember->total_bazar_per_head + $mealDetailsPerMember->balance }}
+								BDT
+							</td>
 							@if($mealDetailsPerMember->balancePlusOrMinusToBeGiven < 0)
 								<td class="danger">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@else
 								<td class="success">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@endif
 						</tr>
+					<?php $plus_minus_balancing += $mealDetailsPerMember->balancePlusOrMinusToBeGiven; ?>
 					@endforeach
+					<tfoot>
+						<tr>
+							<th>মোট  </th>
+							<th> = {{ $total_meal_this_month }}</th>
+							<th> = {{ $total_bazar_this_month }} BDT</th>
+							<th> {{ number_format($plus_minus_balancing, 2) }} </th>
+						</tr>
+					</tfoot>
 					</tbody>
 				</table>
 				<div class="page-header">
@@ -95,7 +110,7 @@
 		</div>
 	</div>
 
-	<footer>Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> & <a target="_blank" href="https://www.linkedin.com/in/masiurcse/">Masiur</a> </footer>
+	<footer class="text-center"><i class="fa fa-heart"></i> Powered By <a target="_blank" href="https://www.MasiurSiddiki.com">www.MasiurSiddiki.com</a>  ---!---  Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.MasiurSiddiki.com/">Masiur</a> & <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> </footer>
 
 @stop
 
@@ -106,6 +121,7 @@
                 container: 'body'
             })
         });
+        console.log({{ $mealDetailsAllMembers }});
         var baseUrl = '{{asset('/')}}';
         $(document).ready(function() {
 
