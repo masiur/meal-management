@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mailgun',
+	'driver' => getenv('email_driver', 'mailgun'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => getenv('email_hosts','smtp.mailgun.org'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|
 	*/
 
-	'port' => 587,
+	'port' => getenv('email_port', 587),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return array(
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => getenv('email_encryption', 'tls'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'postmaster@sandbox175d9abbdfa34087b499278799f86447.mailgun.org',
+	'username' => getenv('email_username','postmaster@sandbox175d9abbdfa34087b499278799f86447.mailgun.org'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'cbf548e2d27cbb1484f7cbf895267eb3',
+	'password' => getenv('email_password','cbf548e2d27cbb1484f7cbf895267eb3'),
 
 	/*
 	|--------------------------------------------------------------------------

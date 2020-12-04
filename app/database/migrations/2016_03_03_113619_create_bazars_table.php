@@ -27,7 +27,8 @@ class CreateBazarsTable extends Migration {
 					->onDelete('cascade')
 					->onUpdate('cascade');
 			$table->float('amount');
-			$table->string('date');
+			$table->date('date');
+			$table->text('details')->nullable();
 			$table->timestamps();
 		});
 	}

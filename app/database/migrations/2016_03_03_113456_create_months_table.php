@@ -18,7 +18,7 @@ class CreateMonthsTable extends Migration {
 			$table->string('name');
 
 			$table->float('cost');
-			
+
 			$table->timestamps();
 		});
 	}
