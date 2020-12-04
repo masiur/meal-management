@@ -29,6 +29,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        {{ Form::label('notes', 'Notes : ', array('class' => 'col-md-2 control-label')) }}
+                        <div class="col-md-4">
+                            {{ Form::textarea('notes', null, array('class' => 'form-control',  'placeholder' => 'How the cost is calculated add here', 'required')) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('start_time', 'Session Starts On:', array('class' => 'col-md-2 control-label')) }}
+                        <div class="col-md-4">
+                            {{ Form::text('start_time', null, array('class' => 'form-control',  'placeholder' => '2012-12-31')) }}
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">

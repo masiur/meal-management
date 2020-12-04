@@ -8,39 +8,46 @@
                     {{ $title }}
                     <span class="pull-right">
 
-                            <a class="btn btn-success btn-sm" href="{{ URL::route('member.index') }}">All Members</a>
+                            <a class="btn btn-success btn-sm" href="{{ URL::route('user.index') }}">All Flats</a>
 
 					</span>
                 </header>
                 <div class="panel-body">
-                    {{ Form::open(array('route' => 'member.store', 'class' => 'form-horizontal','files' => true)) }}
+                    {{ Form::open(array('route' => 'user.store', 'class' => 'form-horizontal','files' => true)) }}
 
 
                     <div class="form-group">
-                        {{ Form::label('name', 'Name : ', array('class' => 'col-md-2 control-label')) }}
+                        {{ Form::label('flat_short_name', 'Flat User Name : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::text('name', null, array('class' => 'form-control',  'placeholder' => 'Name', 'required')) }}
+                            {{ Form::text('flat_short_name', null, array('class' => 'form-control',  'placeholder' => 'Name', 'required')) }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{ Form::label('email', 'Email : ', array('class' => 'col-md-2 control-label')) }}
+                        {{ Form::label('flat_full_name', 'Flat Full Name : ', array('class' => 'col-md-2 control-label')) }}
+                        <div class="col-md-4">
+                            {{ Form::text('flat_full_name', null, array('class' => 'form-control',  'placeholder' => 'Name', 'required')) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('email', 'Manager Email : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
                             {{ Form::text('email', null, array('class' => 'form-control',  'placeholder' => 'someone@example.com', 'required')) }}
                         </div>
                     </div>
 
                      <div class="form-group">
-                        {{ Form::label('mobile', 'Mobile Number : ', array('class' => 'col-md-2 control-label')) }}
+                        {{ Form::label('flat_mobile_number', 'Contact Number : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::text('mobile', null, array('class' => 'form-control',  'placeholder' => '017xxxxxxxx', 'required')) }}
+                            {{ Form::text('flat_mobile_number', null, array('class' => 'form-control',  'placeholder' => '017xxxxxxxx', 'required')) }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{ Form::label('address', 'Address : ', array('class' => 'col-md-2 control-label')) }}
+                        {{ Form::label('flat_address', 'Contact Address : ', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
-                            {{ Form::text('address', null, array('class' => 'form-control',  'placeholder' => 'Room 13, West Side, Royal Flat, Sylhet', 'required')) }}
+                            {{ Form::text('flat_address', null, array('class' => 'form-control',  'placeholder' => 'Royal Flat, Sylhet', 'required')) }}
                         </div>
                     </div>
      

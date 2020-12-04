@@ -13,9 +13,9 @@
                       </a>
                   </li>
                   <li>
-                      <a href="{{ URL::to('/') }}" target="_blank">
+                      <a href="{{ URL::route('user.month', ['user' => Auth::user()->flat_short_name] ) }}" target="_blank">
                           <i class="fa fa-home"></i>
-                          <span>Home</span>
+                          <span>Public Page</span>
                       </a>
                   </li>
 
@@ -53,13 +53,22 @@
                   
 
                   {{-- Roles & Permissions --}}
-                  <li>
+
+                  @if(Auth::user()->hasRole('admin'))
+                  <li >
 
                       <a href="#">
-                          <i class="fa fa-gears"></i>
-                          <span>Roles & Permissions</span>
+                          <i class="fa fa-tasks"></i>
+                          <span>Global Admin Section</span>
                       </a>
-                  </li>
+                      <ul class="sub"> 
+                        <li><a href="{{ route('user.index') }}">All Flats</a></li> 
+                        <li><a href="{{ route('user.create') }}">Add a Flat</a></li>
+                      
+                      </ul>
+
+                  </li> 
+                  @endif
 
 
                   

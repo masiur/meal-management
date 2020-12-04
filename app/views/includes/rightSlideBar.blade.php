@@ -7,7 +7,7 @@
                           <img alt="" src="img/chat-avatar2.jpg" class="media-object">
                       </a>
                       <div class="media-body">
-                          <strong>John Doe</strong>
+                          <strong>John Doefff</strong>
                           <small>Dream Land, AU</small>
                       </div>
                   </div><!-- media -->
@@ -36,7 +36,7 @@
                           <div class="media-status">
                               <span class=" badge bg-success">5</span>
                           </div>
-                          <strong>Jane Doe</strong>
+                          <strong>Jane Doefff</strong>
                           <small>ABC, USA</small>
                       </div>
                   </div><!-- media -->

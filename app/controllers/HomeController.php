@@ -81,4 +81,63 @@ class HomeController extends BaseController {
 							->with('meal_rate', $meal_rate);
 	}
 
+	
+	public function showMonthByUser($user)
+	{
+		$monthName = Input::get('month');
+		$user = User::where('flat_short_name', $user)->first();
+		$month = $monthName ? Month::where('name', strtolower($monthName))->where('user_id', $user->id)->first() : Month::where('user_id', $user->id)->orderBy('start_time','DESC')->first();
+
+	    if(!$month) {
+            return "<h1>Oops! Bad Request</h1>";
+        }
+        return $this->calculateMealbyMonth($month, $user->flat_short_name);
+
+	}
+
+	public function calculateMealbyMonth($month, $user)
+	{
+
+		$total_meal_count = 0.00;
+
+		$total_bazar = $month->cost;
+		$monthCost = $total_bazar;
+
+        $monthId = $month->id;
+		
+         $bazars = Bazar::with('member')->whereMonthId($monthId)->get();
+		
+        $meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
+
+		foreach ($bazars as $bazar) {
+			$total_bazar +=  $bazar->amount;
+		}
+
+		foreach ($meal_counts as $meal) {
+			$total_meal_count +=  $meal->count;
+		}
+		
+		$meal_rate = $total_meal_count != 0 ? number_format($total_bazar/$total_meal_count, 2) : 0;
+
+
+        $mealDetailsAllMembers = $meal_counts;
+        foreach ($meal_counts as $mealCountPerMember) {
+            $mealCountPerMember->total_bazar_per_head = Bazar::where('month_id', $monthId)->where('member_id', $mealCountPerMember->member_id)->sum('amount');
+            $mealCountPerMember->balancePlusOrMinusToBeGiven =  ($mealCountPerMember->total_bazar_per_head + $mealCountPerMember->balance) - ($mealCountPerMember->count * $meal_rate)  ;
+//            $mealCountPerMember->total_bazar_per_head = 20;
+        }
+        $mealDetailsAllMembers;
+
+		return View::make('home')->with('title', $user. ' | Calculation')
+							->with('flat', $user)
+							->with('mealDetailsAllMembers', $mealDetailsAllMembers)
+							->with('bazars', $bazars)
+							->with('total_bazar_this_month', $total_bazar)
+							->with('total_meal_this_month', $total_meal_count)
+							->with('monthCost', $monthCost)
+							->with('month', $month)
+							->with('meal_rate', $meal_rate);
+	
+	}
+
 }

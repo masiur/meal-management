@@ -10,7 +10,7 @@ class MemberController extends \BaseController {
 	 */
 	public function index()
 	{
-		$members = Member::all();
+		$members = Member::where('user_id', Auth::user()->id)->get();
 		return View::make('member.index')
 				->with('title','Members')
 				->with('members',$members);
@@ -27,7 +27,7 @@ class MemberController extends \BaseController {
 		
 
 		return View::make('member.create')
-					->with('title','Create Member');
+					->with('title','Add New Member');
 	}
 
 	/**
@@ -40,6 +40,9 @@ class MemberController extends \BaseController {
 	{
 		$rules = [
 			'name' => 'required',
+			'email' => 'required|email|unique:members',
+			'mobile' => 'required|unique:members',
+			'address' => 'required',
 		];
 
 		$data = Input::all();
@@ -50,6 +53,11 @@ class MemberController extends \BaseController {
 		}
 		$member = new Member;
 		$member->name = $data['name'];
+		$member->mobile = $data['mobile'];
+		$member->email = $data['email'];
+		$member->address = $data['address'];
+		$member->user_id = Auth::user()->id;
+
 		if($member->save()){
 			return Redirect::route('member.index')->with('success',"Added Successfully.");
 		}
@@ -94,7 +102,9 @@ class MemberController extends \BaseController {
 	{
 		$rules = [
 			'name' => 'required',
-
+			'email' => 'required|email|unique:members',
+			'mobile' => 'required|unique:members',
+			'address' => 'required',
 			];
 
 		$data = Input::all();
@@ -105,6 +115,10 @@ class MemberController extends \BaseController {
 		}
 		$member = Member::find($id);
 		$member->name = $data['name'];
+		$member->mobile = $data['mobile'];
+		$member->email = $data['email'];
+		$member->address = $data['address'];
+
 		if($member->save()){
 			return Redirect::route('member.index')->with('success',"Updated Successfully.");
 		}

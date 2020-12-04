@@ -17,21 +17,26 @@
                         <table class="display table table-bordered table-striped" id="example">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>SL</th>
                                 <th>Name</th>
-                            <!--     <th>Status</th>
-                                <th>Owner</th> -->
+                                <th>Email</th>
+                                <th>Mobile Number</th>
+                                <th>Address</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
+                                <?php $count=1 ?>
                             @foreach($members as $member)
                                 <tr>
-                                    <td>{{ $member->id }}</td>
+                                    <td> {{ $count++ }}</td>
                                     <td>{{ $member->name }}</td>
+                                    <td>{{ $member->email }}</td>
+                                    <td>{{ $member->mobile }}</td>
+                                    <td>{{ $member->address }}</td>
                                   
                                     <td class="text-center">
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('member.show', array('id' => $member->id)) }}">Show</a>
+                                        <!-- <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('member.show', array('id' => $member->id)) }}">Show</a> -->
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('member.edit', array('id' => $member->id)) }}">Edit</a>
                                         <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $member->id }}">Delete</a>
                                     </td>

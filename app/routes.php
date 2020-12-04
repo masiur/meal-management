@@ -13,6 +13,8 @@
 
 Route::get('/','HomeController@showWelcome');
 
+
+
 Route::post('post/store', array('uses' => 'PostController@store'));
 
 
@@ -71,4 +73,17 @@ Route::group(array('before' => 'auth'), function()
 	Route::delete('month/meal/delete/{id}', array('as' => 'month.meal.delete', 'uses' => 'MealCountController@destory'));
 
 
+	// Users/Flats Crud
+	Route::get('users', array('as' => 'user.index', 'uses' => 'FlatController@index'));
+	Route::get('user/create', array('as' => 'user.create', 'uses' => 'FlatController@create'));
+	Route::get('user/show/{id}', array('as' => 'user.show', 'uses' => 'FlatController@show'));
+	
+	Route::post('user/store', array('as' => 'user.store', 'uses' => 'FlatController@store'));
+	Route::get('user/edit/{id}', array('as' => 'user.edit', 'uses' => 'FlatController@edit'));
+	Route::put('user/update/{id}', array('as' => 'user.update', 'uses' => 'FlatController@update'));
+	Route::delete('user/delete/{id}', array('as' => 'user.delete', 'uses' => 'FlatController@destory'));
+
 });
+
+
+Route::get('/{user}', array('as' => 'user.month', 'uses' => 'HomeController@showMonthByUser'));

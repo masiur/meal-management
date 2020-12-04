@@ -10,9 +10,9 @@ class MonthController extends \BaseController {
 	 */
 	public function index()
 	{
-		$months = Month::all();
+		$months = Month::where('user_id', Auth::user()->id)->orderBy('start_time','DESC')->get();
 		return View::make('month.index')
-				->with('title','Months')
+				->with('title','Months/Sessions')
 				->with('months',$months);
 	}
 
@@ -39,6 +39,7 @@ class MonthController extends \BaseController {
 		$rules = [
 			'name' => 'required',
 			'cost' => 'required',
+			'notes' => ''
 		];
 
 		$data = Input::all();
@@ -50,6 +51,9 @@ class MonthController extends \BaseController {
 		$month = new Month;
 		$month->name = $data['name'];
 		$month->cost = $data['cost'];
+		$month->notes = $data['notes'];
+		$month->start_time = $data['start_time'];
+		$month->user_id = Auth::user()-id;
 		if($month->save()){
 			return Redirect::route('month.index')->with('success',"Added Successfully.");
 		}
@@ -106,6 +110,9 @@ class MonthController extends \BaseController {
 		$month = Month::find($id);
 		$month->name = $data['name'];
 		$month->cost = $data['cost'];
+		$month->notes = $data['notes'];
+		$month->start_time = $data['start_time'];
+		$month->closing_time = $data['closing_time'];
 		if($month->save()){
 			return Redirect::route('month.index')->with('success',"Updated Successfully.");
 		}
