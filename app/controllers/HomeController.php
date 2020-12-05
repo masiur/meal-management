@@ -15,6 +15,12 @@ class HomeController extends BaseController {
 	|
 	*/
 
+	public function home()
+	{
+		return View::make('welcome')
+				->with('title', "Home");
+	}
+
 	public function showWelcome()
 	{
 		$monthName = Input::get('month');

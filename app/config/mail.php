@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => getenv('email_driver', 'mailgun'),
+	'driver' => getenv('email_driver', 'smtp'),
 
 	/*
 	|--------------------------------------------------------------------------

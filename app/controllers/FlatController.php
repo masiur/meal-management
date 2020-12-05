@@ -58,16 +58,16 @@ class FlatController extends \BaseController {
 		$data['password'] = str_random(6);
 		$user->password = Hash::make($data['password']);
 
-		Mail::send('emails.flatcreated', $data, function($message) use($data)
-			{
-			    $message->from('write2moshi@gmail.com', 'Meal General');
-			    $message->to($data['email'], $data['flat_short_name'])->subject('User Creation | General Meal System');
-			});
 
 		if($user->save()){
 
-			
-			return Redirect::route('user.index')->with('success',"Added Successfully.");
+			Mail::send('emails.flatcreated', $data, function($message) use($data)
+			{
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
+			    $message->to($data['email'], $data['flat_short_name'])->subject('User Creation | General Meal System');
+			});
+			return Redirect::route('user.index')->with('success',"Added Successfully\n Username: ".$data['flat_short_name']. "\n
+				Password: ".$data['password']. " \n Password Has been emailed to you."]);
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}

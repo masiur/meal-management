@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 		<div class="page-header">
-			<h1 class="text-info" align="center">( {{ $month->name }} ) মাসের হিসাব </h1>
+			<h1 class="text-info" align="center">( {{ $month->name }} ) সেশনের হিসাব </h1>
 		</div>
 		<div class="row">
 			<div class="col-md-7">

@@ -1,19 +1,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="General Meal System by SUST CSE 2011 & 2012 Batch">
+        <meta name="description" content="General Meal System by CSE 12 & CSE 11 Batch SUST">
         <meta name="author" content="Masiur Rahman Siddiki">
         <meta name="keyword" content="">
-        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="shortcut icon" href="https://img.icons8.com/clouds/2x/apple-calculator.png">
 
     <!--
             Masiur Rahman Siddiki
 
           C1 - The Royal Apartment
            Meal System
+
+           Gratitude to Nayeem Iqubal Joy Vai
            -->
 
-        <title>{{ $title }} - {{ Config::get('customConfig.names.siteName')}}</title>
+
+
+        <title>{{ isset($title) ? $title. " - "  : ''; }} {{ Config::get('customConfig.names.siteName')}}</title>
 
         <!-- Bootstrap core CSS -->
 
