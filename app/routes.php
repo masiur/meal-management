@@ -28,7 +28,7 @@ Route::group(array('before' => 'auth'), function()
 {
 
 	Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
-	Route::get('dashboard', array('as' => 'dashboard', 'uses' => 'AuthController@dashboard'));
+	Route::get('dashboard', array('as' => 'dashboard', 'uses' => 'DashboardController@dashboard'));
 	Route::get('change-password', array('as' => 'password.change', 'uses' => 'AuthController@changePassword'));
 	Route::post('change-password', array('as' => 'password.doChange', 'uses' => 'AuthController@doChangePassword'));
 	// Member Crud

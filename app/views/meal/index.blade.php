@@ -13,6 +13,10 @@
                     </span>
                 </header>
                 <div class="panel-body">
+                    <?php $month= Month::find($id) ?>
+                    <h3>Meal Details of Month/Session - {{ $month->name }}</h3>
+                    <p>Started: {{ $month->start_time }} --- Ended: {{ $month->closing_time }}</p>
+
                     @if(count($mealcounts))
                         <table class="display table table-bordered table-striped" id="example">
                             <thead>
