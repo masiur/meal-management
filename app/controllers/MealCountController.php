@@ -77,6 +77,42 @@ class MealCountController extends \BaseController {
 		//
 	}
 
+	public function sendEmailOfMealDetails($id)
+	{
+		try {
+			$mealcount = MealCount::with('member')->with('month')->find($id);
+
+			$data['month'] = $mealcount->month;
+			$data['meal_count'] = $mealcount->count;
+			$data['balance'] = $mealcount->balance;
+
+			$member = $mealcount->member;
+
+			$bazarOfThisMemberOfThisMonth = Bazar::where('month_id', $data['month']->id)->where('member_id', $member->id)->lists('amount', 'date');
+			$data['bazars'] = $bazarOfThisMemberOfThisMonth;
+			$data['bazar_count'] = count($bazarOfThisMemberOfThisMonth);
+			$flat = Auth::user();
+			$data['flat'] = $flat->flat_full_name;
+			$data['flat_short_name'] = $flat->flat_short_name;
+			$data['flat_email'] = $flat->email;
+
+			$data['member_name'] = $member->name;
+			$data['email'] = $member->email;
+
+			Mail::send('emails.mealdetails', $data, function($message) use($data)
+			{
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
+			    $message->to($data['email'])->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			});
+			return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
+		} catch (Exception $e) {
+			return Redirect::route('month.meal.index')->with('error', 'Something wen wrong');
+		}
+		
+
+		
+	}
+
 	/**
 	 * Show the form for editing the specified resource.
 	 * GET /mealcount/{id}/edit

@@ -5,4 +5,7 @@ class MealCount extends \Eloquent {
 	public function member(){
 		return $this->belongsTo('Member');
 	}
+	public function month(){
+		return $this->belongsTo('Month');
+	}
 }

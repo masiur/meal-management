@@ -58,9 +58,27 @@ class BazarController extends \BaseController {
 		$bazar->member_id = $data['member_id'];
 		$bazar->amount = $data['amount'];
 		$bazar->date = $data['date'];
-		$bazar->details = json_encode($data['details']);
+		$bazar->details = $data['details'];
+
+		$data['month'] = $bazar->month;
+
+		$member = Member::find($data['member_id']);
+		$flat = Auth::user();
+		$data['flat'] = $flat->flat_full_name;
+		$data['flat_short_name'] = $flat->flat_short_name;
+		$data['flat_email'] = $flat->email;
+
+		$data['member_name'] = $member->name;
+		$data['email'] = $member->email;
 
 		if($bazar->save()){
+
+			Mail::send('emails.bazarupdated', $data, function($message) use($data)
+			{
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
+			    $message->to($data['email'])->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			});
+
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Added Successfully.");
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
@@ -117,13 +135,32 @@ class BazarController extends \BaseController {
 			return Redirect::back()->withInput()->withErrors($validator);
 		}
 		$bazar = Bazar::find($id);
-		$bazar->month_id = $data['month_id'];
+		// $bazar->month_id = $data['month_id'];
 //		$bazar->member_id = $data['member_id'];
 		$bazar->amount = $data['amount'];
 		$bazar->date = $data['date'];
         $bazar->details = json_encode($data['details']);
 
+        $data['month'] = $bazar->month;
+
+		$member = Member::find($bazar->member_id);
+		$flat = Auth::user();
+		$data['flat'] = $flat->flat_full_name;
+		$data['flat_short_name'] = $flat->flat_short_name;
+		$data['flat_email'] = $flat->email;
+
+		$data['member_name'] = $member->name;
+		$data['email'] = $member->email;
+
 		if($bazar->save()){
+
+			Mail::send('emails.bazarupdated', $data, function($message) use($data)
+			{
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
+			    $message->to($data['email'])->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			});
+
+
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Updated Successfully.");
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");

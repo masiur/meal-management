@@ -66,8 +66,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('month/{id}/meals', array('as' => 'month.meal.index', 'uses' => 'MealCountController@index'));
 	Route::get('month/{id}/meal/create', array('as' => 'month.meal.create', 'uses' => 'MealCountController@create'));
 	// Route::get('month/meal/show/{id}', array('as' => 'month.meal.show', 'uses' => 'MealCountController@show'));
+	Route::get('month/meal/senddetails/{id}', array('as' => 'month.meal.details.mail', 'uses' => 'MealCountController@sendEmailOfMealDetails'));
 	
 	Route::post('month/{id}/meal/store', array('as' => 'month.meal.store', 'uses' => 'MealCountController@store'));
+
 	Route::get('month/meal/edit/{id}', array('as' => 'month.meal.edit', 'uses' => 'MealCountController@edit'));
 	Route::put('month/meal/update/{id}', array('as' => 'month.meal.update', 'uses' => 'MealCountController@update'));
 	Route::delete('month/meal/delete/{id}', array('as' => 'month.meal.delete', 'uses' => 'MealCountController@destory'));
