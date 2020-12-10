@@ -23,7 +23,7 @@
          </tr>
          <tr>
             <td>No. of Meal Consumed till date</td>
-            <td>{{ $meal_count }} BDT</td>
+            <td>{{ $meal_count }}</td>
          </tr>
          <tr>
             <td>Deposit Balance</td>

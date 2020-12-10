@@ -101,8 +101,10 @@ class MealCountController extends \BaseController {
 
 			Mail::send('emails.mealdetails', $data, function($message) use($data)
 			{
-			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
-			    $message->to($data['email'])->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
+			    $message->to($data['email']);
+			    $message->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			    $message->replyTo($data['flat_email']);
 			});
 			return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
 		} catch (Exception $e) {

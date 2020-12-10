@@ -63,11 +63,11 @@ class FlatController extends \BaseController {
 
 			Mail::send('emails.flatcreated', $data, function($message) use($data)
 			{
-			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'General Meal System');
+			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
 			    $message->to($data['email'], $data['flat_short_name'])->subject('User Creation | General Meal System');
 			});
-			return Redirect::route('user.index')->with('success',"Added Successfully\n Username: ".$data['flat_short_name']. "\n
-				Password: ".$data['password']. " \n Password Has been emailed to you."]);
+			$successMsg = "Added Successfully.\n Username: ". $data['flat_short_name']. "\n"."Password: ".$data['password']. "\nPassword Has been emailed to you.";
+			return Redirect::route('user.index')->with('success', $successMsg);
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
