@@ -102,8 +102,8 @@ class MemberController extends \BaseController {
 	{
 		$rules = [
 			'name' => 'required',
-			'email' => 'required|email|unique:members',
-			'mobile' => 'required|unique:members',
+			'email' => 'required|email',
+			'mobile' => 'required',
 			'address' => 'required',
 			];
 

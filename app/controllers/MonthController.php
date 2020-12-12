@@ -128,7 +128,7 @@ class MonthController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		
 	}
 
 }

@@ -26,7 +26,7 @@ class MealCountController extends \BaseController {
 	 */
 	public function create($id)
 	{
-		$members = Member::lists('name', 'id');
+		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
 		return View::make('meal.create')
 				->with('title','Create Cumulative Meal')->with('members',$members)
 				->with('id',$id);
@@ -83,13 +83,16 @@ class MealCountController extends \BaseController {
 			$mealcount = MealCount::with('member')->with('month')->find($id);
 
 			$data['month'] = $mealcount->month;
+
 			$data['meal_count'] = $mealcount->count;
 			$data['balance'] = $mealcount->balance;
 
 			$member = $mealcount->member;
 
-			$bazarOfThisMemberOfThisMonth = Bazar::where('month_id', $data['month']->id)->where('member_id', $member->id)->lists('amount', 'date');
+			$bazarOfThisMemberOfThisMonth = Bazar::where('month_id', $data['month']->id)->where('member_id', $member->id)->get();
 			$data['bazars'] = $bazarOfThisMemberOfThisMonth;
+
+	
 			$data['bazar_count'] = count($bazarOfThisMemberOfThisMonth);
 			$flat = Auth::user();
 			$data['flat'] = $flat->flat_full_name;
@@ -124,7 +127,7 @@ class MealCountController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$members = Member::lists('name', 'id');
+		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
 		$mealcount = MealCount::find($id);
 		return View::make('meal.edit')
 				->with('title','Edit Cumulative Meal Info')->with('members',$members)

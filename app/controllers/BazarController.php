@@ -10,7 +10,7 @@ class BazarController extends \BaseController {
 	 */
 	public function index($id)
 	{
-		$bazars = Bazar::with(['member'])->whereMonthId($id)->get();
+		$bazars = Bazar::with(['member'])->whereMonthId($id)->orderBy('date', 'DESC')->get();
 
 		return View::make('bazar.index')
 				->with('title','Bazars')
@@ -26,7 +26,7 @@ class BazarController extends \BaseController {
 	 */
 	public function create($id)
 	{
-		$members = Member::lists('name', 'id');
+		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
 		return View::make('bazar.create')
 				->with('title','Create Bazars')->with('members',$members)
 				->with('id',$id);
@@ -107,7 +107,7 @@ class BazarController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$members = Member::lists('name', 'id');
+		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
 		$bazar = Bazar::find($id);
 		return View::make('bazar.edit')
 				->with('title','Edit Bazars')->with('members',$members)
@@ -177,9 +177,16 @@ class BazarController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destoryBazar($id)
 	{
-		//
+		try {
+			$bazar = Bazar::find($id);
+			$bazarId = $bazar->month_id;
+			$bazar->delete();
+			return Redirect::route('month.bazar.index', $bazarId)->with('success',"Deleted Successfully.");
+		} catch (Exception $e) {
+			return Redirect::back()->with('error',"Something went wrong.Try again");
+		}
 	}
 
 }

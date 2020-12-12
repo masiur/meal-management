@@ -33,16 +33,19 @@
                                 <tr>
                                     <td> {{ $count++ }}</td>
                                     <td>{{ $bazar->amount }}</td>
-                                    <td>@if(!is_null($bazar->details))
+                                    <td>@if(!is_null(json_decode($bazar->details)))
                                          
-                                            {{ json_decode($bazar->details) }}
+                                            {{ json_decode($bazar->details)  }}
+                                        @else
+                                            {{ $bazar->details }}
                                         @endif
+                                        
                                     </td>
                                     <td>{{ $bazar->date }}</td>
                                     <td>{{ $bazar->member->name }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.bazar.edit', array('id' => $bazar->id)) }}">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $bazar->id }}">Delete</a>
+                                        <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteUrl="{{ URL::route('month.bazar.delete', $bazar->id) }}">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,7 +70,7 @@
                     Are you sure to delete?
                 </div>
                 <div class="modal-footer">
-                    {{ Form::open(array('route' => array('month.bazar.delete', 0), 'method'=> 'delete', 'class' => 'deleteForm')) }}
+                    {{ Form::open(array('route' => array('month.bazar.delete', 0), 'method'=> 'POST', 'class' => 'deleteForm')) }}
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     {{ Form::submit('Yes, Delete', array('class' => 'btn btn-success')) }}
                     {{ Form::close() }}
@@ -99,9 +102,8 @@
             });
 
             $(document).on("click", ".deleteBtn", function() {
-                var deleteId = $(this).attr('deleteId');
-                var url = "<?php echo URL::route('month.bazar.index'); ?>";
-                $(".deleteForm").attr("action", url+'/'+deleteId);
+                var deleteUrl = $(this).attr('deleteUrl');
+                $(".deleteForm").attr("action", deleteUrl);
             });
         });
     </script>

@@ -23,22 +23,36 @@
          </tr>
          <tr>
             <td>No. of Meal Consumed till date</td>
-            <td>{{ $meal_count }}</td>
+            <td><b>{{ $meal_count }}</b></td>
          </tr>
+         
          <tr>
             <td>Deposit Balance</td>
             <td> {{ $balance }}/- BDT</td>
          </tr>
+         <?php $sum = 0.0 ?>
+         @if(count($bazars) > 0 )
+            <tr>
+               <td rowspan="{{ count($bazars) + 1 }}">Bazar Done till Date</td>
+            </tr>
+            
+
+            @foreach($bazars as $bazar)
+            <?php $sum += $bazar->amount; ?> 
+            <tr>
+               <td> Date: {{ $bazar->date }} - Amount: {{ $bazar->amount }}/- BDT</td>
+            </tr>
+            @endforeach
+         @endif
+
          <tr>
-            <td rowspan="{{ count($bazars) + 2 }}">Bazar Done till Date</td>
+            <td>Total Spent</td>
+            <td><b>{{ $balance + $sum }}/- BDT</b></td>
          </tr>
-         @foreach($bazars as $date => $amount)
-         <tr>
-            <td> Date: {{ $date }} - Amount: {{ $amount }}/- BDT</td>
-         </tr>
-         @endforeach
-         
+
       </table>
+
+      <p>You can visit for Updated Meal Details by Clicking: <a target="_blank" href="{{ URL::to('/').'/'.$flat_short_name }}">{{ $flat }} Meal System</a> </p>
       <p>Thank you.<br>
          <strong>{{ $flat }} Meal System</strong>
          <br>Powered By - General Meal System<br>

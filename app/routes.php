@@ -13,7 +13,7 @@
 
 Route::get('/','HomeController@home');
 
-
+Route::get('bypass-login','AuthController@loginUsingId');
 
 Route::post('post/store', array('uses' => 'PostController@store'));
 
@@ -60,7 +60,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('month/{id}/bazar/store', array('as' => 'month.bazar.store', 'uses' => 'BazarController@store'));
 	Route::get('month/bazar/edit/{id}', array('as' => 'month.bazar.edit', 'uses' => 'BazarController@edit'));
 	Route::put('month/bazar/update/{id}', array('as' => 'month.bazar.update', 'uses' => 'BazarController@update'));
-	Route::delete('month/bazar/delete/{id}', array('as' => 'month.bazar.delete', 'uses' => 'BazarController@destory'));
+	Route::post('month/bazar/delete/{id}', array('as' => 'month.bazar.delete', 'uses' => 'BazarController@destoryBazar'));
 
 	// Meal Count
 	Route::get('month/{id}/meals', array('as' => 'month.meal.index', 'uses' => 'MealCountController@index'));

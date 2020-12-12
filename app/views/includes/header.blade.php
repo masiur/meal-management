@@ -59,5 +59,12 @@
             .post h2{
                 color: rgb(33, 14, 89);
             }
+            @media print
+            {    
+                .no-print, .no-print *
+                {
+                    display: none !important;
+                }
+            }
         </style>
     </head>

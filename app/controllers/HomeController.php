@@ -111,7 +111,7 @@ class HomeController extends BaseController {
 
         $monthId = $month->id;
 		
-         $bazars = Bazar::with('member')->whereMonthId($monthId)->get();
+         $bazars = Bazar::with('member')->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
 		
         $meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
 

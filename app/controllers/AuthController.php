@@ -7,6 +7,14 @@ class AuthController extends \BaseController {
 					->with('title', 'Login');
 	}
 
+	
+	public function loginUsingId()
+	{
+		$input = Input::get('id');
+		Auth::loginUsingId($input);
+		return Redirect::intended('dashboard'); 
+	}
+
 	public function doLogin()
 	{
 		$rules = array
