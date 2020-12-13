@@ -59,6 +59,8 @@ class MealCountController extends \BaseController {
 		$mealcount->count = $data['count'];
 		$mealcount->balance = $data['balance'];
 
+		$mealcount->notes = $data['notes'];
+
 		if($mealcount->save()){
 			return Redirect::route('month.meal.index',[$data['month_id']])->with('success',"Added Successfully.");
 		}
@@ -109,6 +111,10 @@ class MealCountController extends \BaseController {
 			    $message->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
 			    $message->replyTo($data['flat_email']);
 			});
+
+			$member->email_count = $member->email_count + 1;
+			$member->save();
+			
 			return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
 		} catch (Exception $e) {
 			return Redirect::route('month.meal.index')->with('error', 'Something wen wrong');
@@ -161,6 +167,8 @@ class MealCountController extends \BaseController {
 //		$mealcount->member_id = $data['member_id'];
 		$mealcount->count = $data['count'];
 		$mealcount->balance = $data['balance'];
+		$mealcount->notes = $data['notes'];
+		$mealcount->status = $data['status'];
 
 		if($mealcount->save()){
 			return Redirect::route('month.meal.index',[$data['month_id']])->with('success',"Updated Successfully.");

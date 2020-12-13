@@ -8,35 +8,41 @@
                     {{ $title }}
                     <span class="pull-right">
 
+                            <a class="btn btn-info btn-sm btn-new-user" href="{{ URL::route('month.bazar.index', ['id' => $id]) }}">Bazar of This Session</a>
                             <a class="btn btn-success btn-sm btn-new-user" href="{{ URL::route('month.meal.create', ['id' => $id]) }}">Create New Entry</a>
 
                     </span>
                 </header>
                 <div class="panel-body">
                     <?php $month= Month::find($id) ?>
-                    <h3>Meal Details of Month/Session - {{ $month->name }}</h3>
+                    <h3>Meal Details of Month/Session - <strong>{{ $month->name }}</strong></h3>
                     <p>Started: {{ $month->start_time }} --- Ended: {{ $month->closing_time }}</p>
 
                     @if(count($mealcounts))
                         <table class="display table table-bordered table-striped" id="example">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>SL</th>
                                 <th>Member</th>
                                 <th>Meal Count</th>
                                 <th>Balance</th>
-                            <!--     <th>Status</th>
-                                <th>Owner</th> -->
+                                <th>Notes</th>
+                                <th>Status</th>
+                                <th>Last Update</th> 
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
+                                <?php $count=1 ?>
                             @foreach($mealcounts as $mealcount)
                                 <tr>
-                                    <td>{{ $mealcount->id }}</td>
+                                    <td> {{ $count++ }}</td>
                                     <td>{{ $mealcount->member->name }}</td>
                                     <td>{{ $mealcount->count }}</td>
                                     <td>{{ $mealcount->balance }}</td>
+                                    <td>{{ $mealcount->notes }}</td>
+                                    <td>{{ $mealcount->status }}</td>
+                                    <td>{{ $mealcount->updated_at->format('D, M j, Y h:m:s A T') }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.edit', array('id' => $mealcount->id)) }}">Edit</a>
                                         <a class="btn btn-xs btn-info btn-edit emailBtn" data-toggle="modal" data-target="#emailConfirm" href="#" emailUrl="{{ URL::route('month.meal.details.mail', array('id' => $mealcount->id)) }}">Email Details</a>
@@ -88,7 +94,7 @@
                 <div class="modal-footer">
                     {{ Form::open(array('url' => '#', 'method'=> 'GET', 'class' => 'emailForm')) }}
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                    {{ Form::submit('Yes, Send Email', array('class' => 'btn btn-success')) }}
+                    {{ Form::submit('Yes, Send Email', array('class' => 'btn btn-info')) }}
                     {{ Form::close() }}
                 </div>
             </div>
@@ -111,10 +117,9 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            $.get("http://ipinfo.io", function(response) {
-                console.log(response.city, response.country,response.region);
-            }, "jsonp");
+           
             $('#example').dataTable({
+                "pageLength": 50
             });
 
             $(document).on("click", ".deleteBtn", function() {

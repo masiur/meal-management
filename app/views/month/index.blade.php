@@ -23,6 +23,7 @@
                                 <th>Started</th>
                                 <th>Closing Time</th>
                                 <th>Notes</th>
+                                <th>Last Update</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -38,9 +39,10 @@
                                     <td>{{ $month->start_time }}</td>
                                     <td>{{ $month->closing_time }}</td>
                                     <td>{{ $month->notes }}</td>
+                                    <td>{{ $month->updated_at->format('h:m:s a  d-m-Y') }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>
+                                        <a class="btn btn-xs btn-info btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>
                                         
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.edit', array('id' => $month->id)) }}">Edit</a>
                                         <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $month->id }}">Delete</a>

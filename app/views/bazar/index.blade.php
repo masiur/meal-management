@@ -8,11 +8,17 @@
                     {{ $title }}
                     <span class="pull-right">
 
+                            <a class="btn btn-info btn-sm btn-new-user" href="{{ URL::route('month.meal.index', ['id' => $id]) }}">Meal of This Session</a>
                             <a class="btn btn-success btn-sm btn-new-user" href="{{ URL::route('month.bazar.create', ['id' => $id]) }}">Create New Bazar</a>
+
 
                     </span>
                 </header>
                 <div class="panel-body">
+                    <?php $month= Month::find($id) ?>
+                    <h3>Bazar Details of Month/Session - <strong>{{ $month->name }}</strong></h3>
+                    <p>Started: {{ $month->start_time }} --- Ended: {{ $month->closing_time }}</p>
+
                     @if(count($bazars))
                         <table class="display table table-bordered table-striped" id="example">
                             <thead>
@@ -22,8 +28,7 @@
                                 <th>Details</th>
                                 <th>Date</th>
                                 <th>Who ?</th>
-                            <!--     <th>Status</th>
-                                <th>Owner</th> -->
+                                <th>Last Update</th> 
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -43,6 +48,7 @@
                                     </td>
                                     <td>{{ $bazar->date }}</td>
                                     <td>{{ $bazar->member->name }}</td>
+                                    <td>{{ $bazar->updated_at->format('h:m:s a  d-m-Y') }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.bazar.edit', array('id' => $bazar->id)) }}">Edit</a>
                                         <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteUrl="{{ URL::route('month.bazar.delete', $bazar->id) }}">Delete</a>
@@ -95,10 +101,9 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            $.get("http://ipinfo.io", function(response) {
-                console.log(response.city, response.country,response.region);
-            }, "jsonp");
+            
             $('#example').dataTable({
+                "pageLength": 50
             });
 
             $(document).on("click", ".deleteBtn", function() {

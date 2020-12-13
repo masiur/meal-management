@@ -31,6 +31,21 @@
                                 {{ Form::text('balance', null, array('class' => 'form-control',  'placeholder' => 'Balance', 'required')) }}
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            {{ Form::label('notes', 'Notes : ', array('class' => 'col-md-2 control-label')) }}
+                            <div class="col-md-4">
+                                {{ Form::text('notes', null, array('class' => 'form-control',  'placeholder' => 'Some text here')) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ Form::label('status', 'Status : ', array('class' => 'col-md-2 control-label')) }}
+                            <div class="col-md-4">
+                                {{ Form::text('status', null, array('class' => 'form-control', 'placeholder' => " ACTIVE,  INACTIVE, COMPLETED, UNPAID")) }}
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             {{ Form::label('member_id', 'Member : ', array('class' => 'col-md-2 control-label')) }}
                             <div class="col-md-4">

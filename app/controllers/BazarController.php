@@ -81,30 +81,26 @@ class BazarController extends \BaseController {
 			    $message->replyTo($data['flat_email']);
 			});
 
+			$member->email_count = $member->email_count + 1;
+			$member->save();
+
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Added Successfully.");
 		}
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /bazar/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
+	public function updateEmailCountOfMemberSentTo($value='')
+	{
+		
+	}
+
+
 	public function show($id)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /bazar/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function edit($id)
 	{
 		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
@@ -164,6 +160,8 @@ class BazarController extends \BaseController {
 			    $message->replyTo($data['flat_email']);
 			});
 
+			$member->email_count = $member->email_count + 1;
+			$member->save();
 
 			return Redirect::route('month.bazar.index',[$data['month_id']])->with('success',"Updated Successfully.");
 		}

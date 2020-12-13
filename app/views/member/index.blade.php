@@ -22,6 +22,8 @@
                                 <th>Email</th>
                                 <th>Mobile Number</th>
                                 <th>Address</th>
+                                <th>Email Received</th>
+
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -34,6 +36,8 @@
                                     <td>{{ $member->email }}</td>
                                     <td>{{ $member->mobile }}</td>
                                     <td>{{ $member->address }}</td>
+                                    <td>{{ $member->email_count }}</td>
+
                                   
                                     <td class="text-center">
                                         <!-- <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('member.show', array('id' => $member->id)) }}">Show</a> -->
@@ -88,10 +92,9 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            $.get("http://ipinfo.io", function(response) {
-                console.log(response.city, response.country,response.region);
-            }, "jsonp");
+            
             $('#example').dataTable({
+                "pageLength": 30
             });
 
             $(document).on("click", ".deleteBtn", function() {
