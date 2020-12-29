@@ -126,6 +126,7 @@ return array(
 		/* Uncomment for use in development */
 		'Way\Generators\GeneratorsServiceProvider', // Generators
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
+        'Barryvdh\DomPDF\ServiceProvider',
 
 	),
 
@@ -194,6 +195,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
+        'PDF'             => 'Barryvdh\DomPDF\Facade',
 
 	),
 

@@ -97,11 +97,11 @@ class HomeController extends BaseController {
 	    if(!$month) {
             return "<h1>Oops! Bad Request</h1>";
         }
-        return $this->calculateMealbyMonth($month, $user->flat_short_name);
+        return $this->calculateMealbyMonthByUser($month, $user->flat_short_name);
 
 	}
 
-	public function calculateMealbyMonth($month, $user)
+	public function calculateMealbyMonthByUser($month, $user)
 	{
 
 		$total_meal_count = 0.00;
@@ -146,16 +146,53 @@ class HomeController extends BaseController {
 	
 	}
 
+    public function mealRateCalculate($id)
+    {
+        $monthId = $id;
+
+        $total_meal_count = 0.00;
+
+        $bazars = Bazar::with('member')->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
+
+        $meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
+
+        $month = Month::findOrFail($id);
+
+        $total_bazar = 0.00; // init variable
+
+        foreach ($bazars as $bazar) {
+            $total_bazar +=  $bazar->amount;
+        }
+
+        $total_spent_this_month = $total_bazar + $month->cost; // month cost means mess bazar
+
+        foreach ($meal_counts as $meal) {
+            $total_meal_count +=  $meal->count;
+        }
+
+        $meal_rate = $total_meal_count != 0 ? number_format($total_spent_this_month/$total_meal_count, 2) : 0;
+
+        $month->meal_rate = $meal_rate;
+        $month->save();
+
+        return Redirect::back()->with('success',"Meal Calculated/Recalculated Successfully.");
+
+
+	}
+
     public function generateBill()
     {
         $monthId = Input::get('month');
         $memberId = Input::get('member');
-        $meal_rate = 0;
+
 
          $bazarsByMemberByMonth = Bazar::where('member_id', $memberId)->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
+
          $meal_counts = MealCount::whereMonthId($monthId)->where('member_id', $memberId)->first();
 
-         $total_bazar = $bazarsByMemberByMonth->sum('amount');
+         $meal_rate = $meal_counts->month->meal_rate;
+
+        $total_bazar = $bazarsByMemberByMonth->sum('amount');
 
         $flat = $meal_counts->member->user;
 

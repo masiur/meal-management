@@ -47,6 +47,8 @@
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.edit', array('id' => $mealcount->id)) }}">Edit</a>
                                         <a class="btn btn-xs btn-info btn-edit emailBtn"  href="{{ URL::route('bill.index', array('member' => $mealcount->member_id, 'month' => $mealcount->month_id)) }}">View Details</a>
                                         <a class="btn btn-xs btn-primary btn-edit emailBtn" data-toggle="modal" data-target="#emailConfirm" href="#" emailUrl="{{ URL::route('month.meal.details.mail', array('id' => $mealcount->id)) }}">Email Details</a>
+
+                                        <a class="btn btn-xs btn-warning btn-edit emailBtn"  href="{{ URL::route('month.meal.invoice.mail', array('id' => $mealcount->id)) }}">Email Invoice</a>
                                         <!-- <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $mealcount->id }}">Delete</a> -->
                                     </td>
                                 </tr>

@@ -44,7 +44,9 @@
                                         <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
                                         <a class="btn btn-xs btn-info btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>
                                         
-                                        <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.edit', array('id' => $month->id)) }}">Edit</a>
+                                        <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.edit', array('id' => $month->id)) }}">Edit</a> <br>
+
+                                        <a class="btn btn-xs btn-primary btn-edit" href="{{ URL::route('month.meal.rate', array('id' => $month->id)) }}">Cal/Re-Calculate Meal Rate</a>
                                         <a href="#" class="btn btn-danger btn-xs btn-archive deleteBtn" data-toggle="modal" data-target="#deleteConfirm" deleteId="{{ $month->id }}">Delete</a>
                                     </td>
                                 </tr>
