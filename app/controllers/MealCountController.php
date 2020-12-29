@@ -108,7 +108,7 @@ class MealCountController extends \BaseController {
 			{
 			    $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
 			    $message->to($data['email']);
-			    $message->subject('Bazar Details | '.$data['flat_short_name'].' | General Meal System');
+			    $message->subject('Meal Details | '.$data['flat_short_name'].' | General Meal System');
 			    $message->replyTo($data['flat_email']);
 			});
 

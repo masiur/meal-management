@@ -10,4 +10,9 @@ class Member extends \Eloquent {
     // public function bazars(){
     // 	return $this->hasMany('MealCount');
     // }
+
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

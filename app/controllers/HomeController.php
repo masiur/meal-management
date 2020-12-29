@@ -111,7 +111,7 @@ class HomeController extends BaseController {
 
         $monthId = $month->id;
 		
-         $bazars = Bazar::with('member')->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
+        $bazars = Bazar::with('member')->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
 		
         $meal_counts = MealCount::whereMonthId($monthId)->with('Member')->get();
 
@@ -144,6 +144,26 @@ class HomeController extends BaseController {
 							->with('month', $month)
 							->with('meal_rate', $meal_rate);
 	
+	}
+
+    public function generateBill()
+    {
+        $monthId = Input::get('month');
+        $memberId = Input::get('member');
+        $meal_rate = 0;
+
+         $bazarsByMemberByMonth = Bazar::where('member_id', $memberId)->whereMonthId($monthId)->orderBy('date', 'DESC')->get();
+         $meal_counts = MealCount::whereMonthId($monthId)->where('member_id', $memberId)->first();
+
+         $total_bazar = $bazarsByMemberByMonth->sum('amount');
+
+        $flat = $meal_counts->member->user;
+
+        return View::make('meal_details')->with('bazars', $bazarsByMemberByMonth)
+                                ->with('meal_rate', $meal_rate)
+                                ->with('meals', $meal_counts)
+                                ->with('flat', $flat)
+                                ->with('total_bazar', $total_bazar);
 	}
 
 }

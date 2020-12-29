@@ -85,6 +85,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::put('user/update/{id}', array('as' => 'user.update', 'uses' => 'FlatController@update'));
 	Route::delete('user/delete/{id}', array('as' => 'user.delete', 'uses' => 'FlatController@destory'));
 
+
+	// Bill View (Meal)
+    Route::get('invoice', array('as' => 'bill.index', 'uses' => 'HomeController@generateBill'));
+
 });
 
 
