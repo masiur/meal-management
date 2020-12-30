@@ -82,9 +82,17 @@ class MonthController extends \BaseController {
 	public function edit($id)
 	{
 		$month = Month::find($id);
+		$status = [ 
+			'ACTIVE' => 'ACTIVE',
+			'RUNNING' => 'RUNNING',
+			'INACTIVE' => 'INACTIVE',
+			'COMPLETED' => 'COMPLETED',
+			];
 		return View::make('month.edit')
 					->with('title','Edit Month')
+					->with('status',$status)
 					->with('month',$month);
+
 	}
 
 	/**
@@ -111,6 +119,7 @@ class MonthController extends \BaseController {
 		$month->name = $data['name'];
 		$month->cost = $data['cost'];
 		$month->notes = $data['notes'];
+		$month->status = $data['status'];
 		$month->start_time = $data['start_time'];
 		$month->closing_time = $data['closing_time'];
 		if($month->save()){

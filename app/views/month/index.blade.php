@@ -19,10 +19,12 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Session</th>
-                                <th>Central Cost</th>
+                                <th>Mess Cost</th>
                                 <th>Started</th>
-                                <th>Closing Time</th>
+                                <th>Ended</th>
                                 <th>Notes</th>
+                                <th>Status</th>
+                                <th>Meal Rate</th>
                                 <th>Last Update</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -39,6 +41,8 @@
                                     <td>{{ $month->start_time }}</td>
                                     <td>{{ $month->closing_time }}</td>
                                     <td>{{ $month->notes }}</td>
+                                    <td>{{ $month->status }}</td>
+                                    <td>{{ $month->meal_rate }}</td>
                                     <td>{{ $month->updated_at->format('h:m:s a  d-m-Y') }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>

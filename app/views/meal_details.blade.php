@@ -19,6 +19,9 @@
             /*margin-bottom: 5%;*/
             /*left: 0;*/
         }
+        @media print {
+            body {-webkit-print-color-adjust: exact;}
+        }
     </style>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,7 +42,7 @@
             <h4>Meal Rate: {{ $meal_rate ? $meal_rate : 0.00 }}</h4>
             <h4>Consumed Meal: {{ $meals->count }}</h4>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-6 pull-right">
             <?php
                 $total = ($meal_rate * $meals->count);
                 $paid = ($meals->balance + $total_bazar);
@@ -47,18 +50,29 @@
             ?>
             <h4>Total Payable: {{ number_format($total, 2) }} BDT</h4>
             <h4>Amount Paid: {{ number_format($paid, 2) }} BDT</h4>
+
             <hr class="striped-border">
-                @if($due > 0)
-                    <h4 style="color: red;">Due: <strong>{{ number_format(abs($due)) }} BDT</strong></h4>
-                    <span style="font-size: 8pt">**Please pay the mentioned amount as soon as possible.</span>
+            @if($due > 0)
+                <div style="color: red !important;">
+                    <h4 >Due: <strong>{{ number_format(abs($due)) }} BDT</strong></h4>
+                                <span style="font-size: 8pt">**Please pay the mentioned amount as soon as possible.</span>
+                </div>
+                    
                 @else
-                    <h4 style="color: green;">Surplus: <strong>{{ number_format(abs($due)) }} BDT</strong></h4>
+                <div style="color: green;">
+                    <h4 >Surplus: <strong>{{ number_format(abs($due)) }} BDT</strong></h4>
                     <span style="font-size: 8pt">*Be patient. You will receive the mentioned amount after others' due settled</span>
+                </div>
                 @endif
 
         </div>
 
+
+        
+
     </div>
+
+    
 
 
 

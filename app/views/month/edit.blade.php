@@ -36,6 +36,14 @@
                     </div>
 
                     <div class="form-group">
+                        {{ Form::label('status', 'Status : ', array('class' => 'col-md-2 control-label')) }}
+                        <div class="col-md-4">
+                            {{ Form::select('status',  $status, null, array('class' => 'form-control',  'placeholder' => 'How the cost is calculated add here', 'required')) }}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
                         {{ Form::label('start_time', 'Session Starts On:', array('class' => 'col-md-2 control-label')) }}
                         <div class="col-md-4">
                             {{ Form::text('start_time', null, array('class' => 'form-control',  'placeholder' => '2012-12-31')) }}

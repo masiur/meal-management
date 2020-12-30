@@ -17,6 +17,7 @@ Route::get('bypass-login','AuthController@loginUsingId');
 
 Route::post('post/store', array('uses' => 'PostController@store'));
 
+Route::get('invoice', array('as' => 'bill.index', 'uses' => 'HomeController@generateBill'));
 
 Route::group(['before' => 'guest'], function(){
 	Route::controller('password', 'RemindersController');
@@ -88,7 +89,7 @@ Route::group(array('before' => 'auth'), function()
 
 
 	// Bill View (Meal)
-    Route::get('invoice', array('as' => 'bill.index', 'uses' => 'HomeController@generateBill'));
+    
 
 
 });

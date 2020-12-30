@@ -82,17 +82,24 @@ class MealCountController extends \BaseController
 
     public function emailInvoiceOfMealDetails($id)
     {
+
         try {
             $mealcount = MealCount::with('member')->with('month')->find($id);
 
             $data['month'] = $mealcount->month;
+
+            if($data['month']->status != 'COMPLETED') {
+                return Redirect::route('month.meal.index', [$data['month']->id])->with('warning', 'Session is not COMPLETED yet.');
+            }
 
             $data['meal_count'] = $mealcount->count;
             $data['balance'] = $mealcount->balance;
 
             $member = $mealcount->member;
 
-            $flat = Auth::user();
+
+             $flat = $mealcount->member->user;
+
             $data['flat'] = $flat->flat_full_name;
             $data['flat_short_name'] = $flat->flat_short_name;
             $data['flat_email'] = $flat->email;
@@ -100,16 +107,20 @@ class MealCountController extends \BaseController
             $data['member_name'] = $member->name;
             $data['email'] = $member->email;
 
-            $filename = public_path().'/invoices/'.$data['member_name'].date('_Y_m_d_h_m_s').".pdf";
+            $filename = public_path().'/invoices/Invoice_'.$data['member_name'].date('_Y_m_d_h_m_s').".pdf";
 
             $data['filename'] = $filename;
 
             // generating pdf
-            $url = URL::route('bill.index', array('member' => $mealcount->member_id, 'month' => $mealcount->month_id));
-
+            $printHtmlUrl = URL::route('bill.index', array('member' => $mealcount->member_id, 'month' => $mealcount->month_id));
 
             $url = "https://api.sejda.com/v2/html-pdf";
-            $content = json_encode(array('url' => 'https://google.com.bd'));
+
+            $content = json_encode(array
+                ('url' => $printHtmlUrl,
+                    'pageSize' => 'a4'
+                )
+            );
             $apiKey = "api_F2EE618D80564415AFC0C84CE1F28B03";
 
             $curl = curl_init($url);
@@ -132,26 +143,28 @@ class MealCountController extends \BaseController
                 fwrite($fp, $response);
                 fclose($fp);
                 print("PDF saved to disk");
+
+                Mail::send('emails.mealinvoice', $data, function ($message) use ($data) {
+                    $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
+                    $message->to($data['email']);
+                    $message->subject('Invoice of '.$data['month']->name. ' Session | ' . $data['flat_short_name'] . ' | General Meal System');
+                    $message->attach($data['filename']);
+                    $message->replyTo($data['flat_email']);
+                });
+
+                $member->email_count = $member->email_count + 1;
+                $member->save();
+
+
             } else {
                 print("Error: failed with status $status, response $response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
             }
 
 
-            Mail::send('emails.mealinvoice', $data, function ($message) use ($data) {
-                $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
-                $message->to($data['email']);
-                $message->subject('Invoice of '.$data['month']. ' Session | ' . $data['flat_short_name'] . ' | General Meal System');
-                $message->attach($data['filename']);
-                $message->replyTo($data['flat_email']);
-            });
-
-            $member->email_count = $member->email_count + 1;
-            $member->save();
-
-
             return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
         } catch (Exception $e) {
-            return Redirect::route('month.meal.index')->with('error', 'Something wen wrong');
+            return $e;
+            return Redirect::route('month.meal.index', [$data['month']->id])->with('error', 'Something went wrong');
         }
 
 
