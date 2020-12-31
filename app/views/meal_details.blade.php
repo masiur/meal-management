@@ -31,7 +31,7 @@
 
 <div class="container">
     <h2>{{ $flat->flat_full_name }} Meal System</h2>
-    <h3>Session: {{ $meals->month->name }} <span style="font-size: 8pt"> {{ $meals->month->start_time }} --> {{  $meals->month->closing_time  }}</span></h3>
+    <h3>Session: {{ $meals->month->name }} <span style="font-size: 8pt"> {{ $meals->month->start_time }} --> {{  isset($meals->month->closing_time) ? $meals->month->closing_time : 'Ongoing'  }}</span></h3>
 
 
     <h4>Dear <b>Mr {{ $meals->member->name }}</b></h4>
@@ -90,7 +90,7 @@
             <td>Month/Session Duration</td>
             <td>{{ DateTime::createFromFormat('Y-m-d', $meals->month->start_time)->format('F d, Y') }}
                     to
-                {{ DateTime::createFromFormat('Y-m-d', $meals->month->closing_time)->format('F d, Y') }}</td>
+                {{ isset($meals->month->closing_time) ? DateTime::createFromFormat('Y-m-d', $meals->month->closing_time)->format('F d, Y') : 'Ongoing' }}</td>
         </tr>
 
         <tr>
