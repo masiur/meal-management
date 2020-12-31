@@ -161,7 +161,7 @@ class MealCountController extends \BaseController
             }
 
 
-            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$data['member_name'].' Successfully');
+            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$data['member_name'].' '.$data['email'].' Successfully');
         } catch (Exception $e) {
             return $e;
             return Redirect::route('month.meal.index', [$data['month']->id])->with('error', 'Something went wrong');
@@ -177,8 +177,23 @@ class MealCountController extends \BaseController
 
             $data['month'] = $mealcount->month;
 
+            $data['meal_count'] = $mealcount->count;
+            $data['balance'] = $mealcount->balance;
 
             $member = $mealcount->member;
+
+            $bazarOfThisMemberOfThisMonth = Bazar::where('month_id', $data['month']->id)->where('member_id', $member->id)->get();
+            $data['bazars'] = $bazarOfThisMemberOfThisMonth;
+
+    
+            $data['bazar_count'] = count($bazarOfThisMemberOfThisMonth);
+            $flat = Auth::user();
+            $data['flat'] = $flat->flat_full_name;
+            $data['flat_short_name'] = $flat->flat_short_name;
+            $data['flat_email'] = $flat->email;
+
+            $data['member_name'] = $member->name;
+            $data['email'] = $member->email;
 
 
             Mail::send('emails.mealdetails', $data, function ($message) use ($data) {
@@ -191,7 +206,7 @@ class MealCountController extends \BaseController
             $member->email_count = $member->email_count + 1;
             $member->save();
 
-            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$data['member_name'].' Successfully');
+            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$member->name. ' '.$member->email.' Successfully');
         } catch (Exception $e) {
             return Redirect::route('month.meal.index')->with('error', 'Something wen wrong');
         }

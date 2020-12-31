@@ -64,11 +64,13 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('month/bazar/delete/{id}', array('as' => 'month.bazar.delete', 'uses' => 'BazarController@destoryBazar'));
 
 	// Meal Count
+	
+	// Route::get('month/meal/show/{id}', array('as' => 'month.meal.show', 'uses' => 'MealCountController@show'));
+	Route::get('meal/senddetails/{id}', array('as' => 'month.meal.details.mail', 'uses' => 'MealCountController@sendEmailOfMealDetails'));
+	Route::get('meal/invoice/{id}', array('as' => 'month.meal.invoice.mail', 'uses' => 'MealCountController@emailInvoiceOfMealDetails'));
+
 	Route::get('month/{id}/meals', array('as' => 'month.meal.index', 'uses' => 'MealCountController@index'));
 	Route::get('month/{id}/meal/create', array('as' => 'month.meal.create', 'uses' => 'MealCountController@create'));
-	// Route::get('month/meal/show/{id}', array('as' => 'month.meal.show', 'uses' => 'MealCountController@show'));
-	Route::get('month/meal/senddetails/{id}', array('as' => 'month.meal.details.mail', 'uses' => 'MealCountController@sendEmailOfMealDetails'));
-	Route::get('month/meal/invoice/{id}', array('as' => 'month.meal.invoice.mail', 'uses' => 'MealCountController@emailInvoiceOfMealDetails'));
 
 	Route::post('month/{id}/meal/store', array('as' => 'month.meal.store', 'uses' => 'MealCountController@store'));
 
