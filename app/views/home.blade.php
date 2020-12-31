@@ -24,7 +24,7 @@
 					<?php $plus_minus_balancing = 0; ?>
 					@foreach($mealDetailsAllMembers as $mealDetailsPerMember)
 						<tr>
-							<td>{{$mealDetailsPerMember->member->name}}</td>
+							<td>{{ $mealDetailsPerMember->member->name }}</td>
 							<td>{{number_format($mealDetailsPerMember->count, 2)}}</td>
 							<td>
 								{{number_format($mealDetailsPerMember->total_bazar_per_head, 0)}} +
@@ -65,7 +65,14 @@
 						<tr>
 							<td>{{$bazar->member->name}}</td>
 							<td>{{number_format($bazar->amount, 2)}}
-								<button type="button" class="btn btn-secondary btn-xs example-popover" data-container="body" data-toggle="popover" data-placement="right"  data-content="{{ json_decode($bazar->details) }}">
+								<?php 
+									if(!is_null(json_decode($bazar->details))){
+										$details = json_decode($bazar->details);
+									}else {
+										$details = $bazar->details;
+									}
+                                 ?>
+								<button type="button" class="btn btn-secondary btn-xs example-popover" data-container="body" data-toggle="popover" data-placement="right"  data-content="{{ $details }}">
 									Details
 								</button>
 							</td>

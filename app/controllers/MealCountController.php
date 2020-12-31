@@ -161,7 +161,7 @@ class MealCountController extends \BaseController
             }
 
 
-            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
+            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$data['member_name'].' Successfully');
         } catch (Exception $e) {
             return $e;
             return Redirect::route('month.meal.index', [$data['month']->id])->with('error', 'Something went wrong');
@@ -170,7 +170,7 @@ class MealCountController extends \BaseController
 
     }
 
-    public function sendInvoiceOfMealDetails($id)
+    public function sendEmailOfMealDetails($id)
     {
         try {
             $mealcount = MealCount::with('member')->with('month')->find($id);
@@ -191,7 +191,7 @@ class MealCountController extends \BaseController
             $member->email_count = $member->email_count + 1;
             $member->save();
 
-            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to the Member Successfully');
+            return Redirect::route('month.meal.index', [$data['month']->id])->with('success', 'Email Sent to '.$data['member_name'].' Successfully');
         } catch (Exception $e) {
             return Redirect::route('month.meal.index')->with('error', 'Something wen wrong');
         }

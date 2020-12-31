@@ -43,7 +43,7 @@
                                     <td>{{ $month->notes }}</td>
                                     <td>{{ $month->status }}</td>
                                     <td>{{ $month->meal_rate }}</td>
-                                    <td>{{ $month->updated_at->format('h:m:s a  d-m-Y') }}</td>
+                                    <td>{{ $month->updated_at->format('h:i:s a  d-m-Y') }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
                                         <a class="btn btn-xs btn-info btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>

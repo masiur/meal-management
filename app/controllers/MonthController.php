@@ -53,7 +53,7 @@ class MonthController extends \BaseController {
 		$month->cost = $data['cost'];
 		$month->notes = $data['notes'];
 		$month->start_time = $data['start_time'];
-		$month->user_id = Auth::user()-id;
+		$month->user_id = Auth::user()->id;
 		if($month->save()){
 			return Redirect::route('month.index')->with('success',"Added Successfully.");
 		}
