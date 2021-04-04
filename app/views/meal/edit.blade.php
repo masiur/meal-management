@@ -9,7 +9,7 @@
                     <span class="pull-right">
                             <a class="btn btn-success btn-sm" href="{{ URL::route('month.meal.index', ['id' => $mealcount->month_id]) }}">All Meal Info</a>
                             
-					</span>
+                    </span>
                 </header>
                 <div class="panel-body">
                    
@@ -21,7 +21,7 @@
                          <div class="form-group">
                             {{ Form::label('count', 'Meal Count : ', array('class' => 'col-md-2 control-label')) }}
                             <div class="col-md-4">
-                                {{ Form::text('count', null, array('class' => 'form-control',  'placeholder' => 'Meal Count', 'required')) }}
+                                {{ Form::text('count', null, array('class' => 'form-control',  'placeholder' => 'Meal Count', 'required', 'readonly')) }}
                             </div>
                         </div>
 
