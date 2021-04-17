@@ -12,9 +12,9 @@
 
                     </span>
                 </header>
-                <div class="panel-body">
+                <div class="panel-body" style="overflow-x: scroll!important;">
                     @if(count($months))
-                        <table class="display table table-bordered table-striped" id="example">
+                        <table class="display table-responsive table table-bordered table-striped" id="example" >
                             <thead>
                             <tr>
                                 <th>SL</th>
@@ -35,7 +35,12 @@
                                 <tr>
                                     <td> {{ $count++ }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('user.month', array('month' => $month->name, 'user' => Auth::user()->flat_short_name )) }}">{{ $month->name }}</a>
+                                        <b>{{ $month->name }}</b>
+                                        <a title="Go to Meal Details" class="btn btn-xs btn-info btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}"> Meal Details</a>
+                                        
+                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
+                                        <a title="Go to Meal Calculation Page" class="btn btn-xs btn-primary  btn-show" href="{{ URL::route('user.month', array('month' => $month->name, 'user' => Auth::user()->flat_short_name )) }}">Public Page</a>
+                                        
                                     </td>
                                     <td>{{ $month->cost }}</td>
                                     <td>{{ $month->start_time }}</td>
@@ -45,8 +50,7 @@
                                     <td>{{ $month->meal_rate }}</td>
                                     <td>{{ $month->updated_at->format('h:i:s a  d-m-Y') }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('month.bazar.index', array('id' => $month->id)) }}">Bazars</a>
-                                        <a class="btn btn-xs btn-info btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}">Meals</a>
+                                        
                                         
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.edit', array('id' => $month->id)) }}">Edit</a> <br>
 

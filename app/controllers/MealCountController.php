@@ -3,28 +3,16 @@
 class MealCountController extends \BaseController
 {
 
-    /**
-     * Display a listing of the resource.
-     * GET /mealcount
-     *
-     * @return Response
-     */
     public function index($id)
     {
-        $mealcounts = MealCount::with(['member'])->whereMonthId($id)->get();
+        $mealcounts = MealCount::with(['member'])->whereMonthId($id)->paginate(20);
 
         return View::make('meal.index')
-            ->with('title', 'Meal Counts')
+            ->with('title', 'Meal Entry/Update Page')
             ->with('mealcounts', $mealcounts)
             ->with('id', $id);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * GET /mealcount/create
-     *
-     * @return Response
-     */
     public function create($id)
     {
         $members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
@@ -33,12 +21,6 @@ class MealCountController extends \BaseController
             ->with('id', $id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * POST /mealcount
-     *
-     * @return Response
-     */
     public function store($id)
     {
         $rules = [
@@ -68,17 +50,7 @@ class MealCountController extends \BaseController
         return Redirect::back()->with('error', "Something went wrong.Try again");
     }
 
-    /**
-     * Display the specified resource.
-     * GET /mealcount/{id}
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     public function emailInvoiceOfMealDetails($id)
     {
@@ -147,7 +119,7 @@ class MealCountController extends \BaseController
                 Mail::send('emails.mealinvoice', $data, function ($message) use ($data) {
                     $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
                     $message->to($data['email']);
-                    $message->subject('Invoice of '.$data['month']->name. ' Session | ' . $data['flat_short_name'] . ' | General Meal System');
+                    $message->subject('Invoice of '.$data['month']->name. ' Session | ' . $data['flat'] . ' | General Meal System');
                     $message->attach($data['filename']);
                     $message->replyTo($data['flat_email']);
                 });
@@ -197,9 +169,9 @@ class MealCountController extends \BaseController
 
 
             Mail::send('emails.mealdetails', $data, function ($message) use ($data) {
-                $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
+                $message->from('no-reply@general-emailing.masiursiddiki.com', $data['flat_short_name'].'| General Meal System'. ' | No Reply');
                 $message->to($data['email']);
-                $message->subject('Meal Details | ' . $data['flat_short_name'] . ' | General Meal System');
+                $message->subject('Current Meal Update | ' . $data['flat'] . ' | General Meal System');
                 $message->replyTo($data['flat_email']);
             });
 
@@ -224,13 +196,7 @@ class MealCountController extends \BaseController
 				->with('mealcount',$mealcount);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /mealcount/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function update($id)
 	{
 		$rules = [
@@ -260,13 +226,23 @@ class MealCountController extends \BaseController
 		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /mealcount/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    public function updateMeal($id)
+    {
+        $data = Input::all();
+        $mealcount =  MealCount::find($id);
+        $mealcount->count = $mealcount->count + $data['count'];
+        if($mealcount->save()){
+            $flat = Auth::user();
+            $member = $mealcount->member;
+            File::prepend(storage_path('logs/meal_bazar_of_'.$flat->id.'.log'), Date('Y-m-d h:m:s')." Meal Added ".$data['count'].
+                " for Member: ".$member->name.".".$mealcount->member_id ." of Month: ".$mealcount->month->name.".".$mealcount->month_id. " Under Flat:".$flat->flat_short_name.".".$flat->id."\n");
+            return Redirect::route('month.meal.index',[$data['month_id']])->with('success', "Added ".$data['count'].
+                " to ".$member->name." Successfully.");
+        }
+        return Redirect::back()->with('error',"Something went wrong.Try again");
+    }
+
+
 	public function destroy($id)
 	{
 		//

@@ -13,7 +13,7 @@
 
                     </span>
                 </header>
-                <div class="panel-body">
+                <div class="panel-body" style="overflow-x: scroll!important;">
                     <?php $month= Month::find($id) ?>
                     <h3>Meal Details of Month/Session - <strong>{{ $month->name }}</strong></h3>
                     <p>Started: {{ $month->start_time }} --- Ended: {{ $month->closing_time }}</p>
@@ -42,6 +42,8 @@
                                     <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 1, 'month_id' => $mealcount->month_id)) }}">+1</a>
                                     <a class="btn btn-xs btn-danger btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => -1, 'month_id' => $mealcount->month_id)) }}">-1</a>
                                     <a class="btn btn-xs btn-info btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 2, 'month_id' => $mealcount->month_id)) }}">+2</a>
+                                   
+                                    <a class="btn btn-xs btn-warning btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 5, 'month_id' => $mealcount->month_id)) }}">+5</a>
                                     </td>
                                     
                                     <td>{{ $mealcount->balance }}</td>
@@ -51,7 +53,9 @@
                                     <td class="text-center">
                                         <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.edit', array('id' => $mealcount->id)) }}">Edit</a>
                                         <a class="btn btn-xs btn-info btn-edit emailBtn"  href="{{ URL::route('bill.index', array('member' => $mealcount->member_id, 'month' => $mealcount->month_id)) }}">View Details</a>
-                                        <a class="btn btn-xs btn-primary btn-edit emailBtn" data-toggle="modal" data-target="#emailConfirm" href="#" emailUrl="{{ URL::route('month.meal.details.mail', array('id' => $mealcount->id)) }}">Email Details</a>
+
+                                        <a title="Send Email to Member About Current Meal & Bazar Update" class="btn btn-xs btn-primary btn-edit emailBtn" data-toggle="modal" data-target="#emailConfirm" href="#" emailUrl="{{ URL::route('month.meal.details.mail', array('id' => $mealcount->id)) }}">Email Current Update</a>
+                                        
                                         @if($month->status == 'COMPLETED')
                                         <a class="btn btn-xs btn-warning btn-edit emailBtn"  href="{{ URL::route('month.meal.invoice.mail', array('id' => $mealcount->id)) }}">Email Invoice</a>
                                         @endif
@@ -61,6 +65,8 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        {{ $mealcounts->links() }} 
                     @else
                         No Data Found
                     @endif
@@ -127,9 +133,9 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
            
-            $('#example').dataTable({
-                "pageLength": 50
-            });
+            // $('#example').dataTable({
+            //     "pageLength": 50
+            // });
 
             $(document).on("click", ".deleteBtn", function() {
                 var deleteId = $(this).attr('deleteId');

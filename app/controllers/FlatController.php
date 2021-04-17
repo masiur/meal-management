@@ -93,7 +93,10 @@ class FlatController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$flat = User::find($id);
+		return View::make('flats.edit')
+				->with('flat', $flat)
+				->with('title','Edit User/Flat');
 	}
 
 	/**
@@ -105,7 +108,40 @@ class FlatController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = [
+			'flat_short_name' => 'required',
+			'email' => 'required|email',
+			'flat_mobile_number' => 'required',
+			'flat_address' => 'required',
+		];
+
+		$data = Input::all();
+		$validator = Validator::make($data, $rules);
+
+		// if($validator->fails()){
+		// 	return Redirect::back()->withInput()->withErrors($validator);
+		// }
+		$user = User::find($id);
+		$user->flat_short_name = $data['flat_short_name'];
+		$user->flat_mobile_number = $data['flat_mobile_number'];
+		$user->email = $data['email'];
+		$user->flat_address = $data['flat_address'];
+		$user->save();
+
+
+
+		if($user->save()){
+
+		// 	Mail::send('emails.flatcreated', $data, function($message) use($data)
+		// 	{
+		// 	    $message->from('no-reply@general-emailing.masiursiddiki.com', 'No Reply | General Meal System');
+		// 	    $message->to($data['email'], $data['flat_short_name'])->subject('User Creation | General Meal System');
+		// 	});
+		// 	$successMsg = "Added Successfully.\n Username: ". $data['flat_short_name']. "\n"."Password: ".$data['password']. "\nPassword Has been emailed to you.";
+			return Redirect::route('user.index')->with('success', 'Successfully Updated.');
+		}
+
+		return Redirect::back()->with('error',"Something went wrong.Try again");
 	}
 
 	/**

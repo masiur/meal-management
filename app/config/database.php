@@ -61,7 +61,8 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-			'timezone'  => getenv('timezone', 'UTC')
+			'timezone'  => getenv('timezone', 'UTC'),
+			'options'   => [PDO::ATTR_EMULATE_PREPARES => true]
 		),
 
 		'pgsql' => array(
