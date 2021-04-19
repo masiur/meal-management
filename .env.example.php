@@ -3,6 +3,7 @@
 // return the configuration for the 'local' environment
 return array(
     'app_url' => 'http://localhost::8000',
+    'debug' => true,
     'app_environment' => 'local',
     'timezone' => 'Asia/Dhaka',
     'db_driver' => 'mysql',

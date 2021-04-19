@@ -1,9 +1,12 @@
-# Dockerfile
-LABEL maintainer="mrsiddiki@gmail.com"
 FROM php:7.0-apache
+LABEL maintainer="mrsiddiki@gmail.com"
+
 
 RUN apt-get update && apt-get install -y \
 		libmcrypt-dev \
+		zip \
+		git \
+		unzip \
 		&& docker-php-ext-install -j$(nproc) iconv mcrypt
 
 
@@ -22,4 +25,7 @@ RUN a2enmod rewrite
 #ADD ./public /var/www/html
 #WORKDIR /var/www/html/
 
-#RUN chmod 777 -R /var/www/html/app/storage
+composer update
+
+RUN chmod 777 -R app/storage
+RUN chmod 777 -R public

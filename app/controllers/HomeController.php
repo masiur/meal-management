@@ -90,18 +90,34 @@ class HomeController extends BaseController {
 	
 	public function showMonthByUser($user)
 	{
-		$monthName = Input::get('month');
+		$requestedMonthName = Input::get('month');
 		$user = User::where('flat_short_name', $user)->first();
-		$month = $monthName ? Month::where('name', strtolower($monthName))->where('user_id', $user->id)->first() : Month::where('user_id', $user->id)->orderBy('start_time','DESC')->first();
-
+		if($requestedMonthName){
+			$requestedMonth = Month::where('name', strtolower($requestedMonthName))->where('user_id', $user->id)->first();
+			$last3months= Month::where('user_id', $user->id)
+						->whereDate('start_time', '<=', $requestedMonth->start_time)
+						->orderBy('start_time','DESC')
+						->take(4)
+						->get();
+		} else {
+			$last3months= Month::where('user_id', $user->id)
+						->orderBy('start_time','DESC')
+						->take(4)
+						->get(); 
+		}
+		$month= $last3months->first();
+		// $last3months = array_shift($last3months);
+		unset($last3months[0]);
+		// dd($last3months)
+		
 	    if(!$month) {
             return "<h1>Oops! Bad Request</h1>";
         }
-        return $this->calculateMealbyMonthByUser($month, $user->flat_short_name);
+        return $this->calculateMealbyMonthByUser($month, $user->flat_short_name, $last3months); //removing first element of array by array_shift
 
 	}
 
-	public function calculateMealbyMonthByUser($month, $user)
+	public function calculateMealbyMonthByUser($month, $user, $last3months)
 	{
 
 		$total_meal_count = 0.00;
@@ -142,6 +158,7 @@ class HomeController extends BaseController {
 							->with('total_meal_this_month', $total_meal_count)
 							->with('monthCost', $monthCost)
 							->with('month', $month)
+							->with('last3months', $last3months)
 							->with('meal_rate', $meal_rate);
 	
 	}

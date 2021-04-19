@@ -3,15 +3,30 @@
 @section('content')
 	<div class="container">
 		<div class="page-header">
-			<h1 class="text-info" align="center">( {{ $month->name }} ) সেশনের হিসাব </h1>
+			<h1 class="text-info" align="center">( {{ $month->name }} ) সেশনের হিসাব <br></h1>
+			<p align="center" class="text-center" style="font-size: 9pt">From {{ $month->start_time }} To {{ $month->status == 'COMPLETED' ? $month->closing_time : '<span style="color: chocolate">RUNNING</span>' }}</p>
+			<div class="no-print">
+				@if($month->status == 'RUNNING')
+				<marquee><b style="color: chocolate">This Session is RUNNING</b></marquee>
+				@elseif($month->status == 'COMPLETED')
+				<marquee><b style="color: green">This Session is COMPLETED</b></marquee>
+				@endif
+			 <ul class="list-inline">
+			 	Last Months:
+					@foreach($last3months as $lastmonth)
+					<li aria-hidden="true"> <a style="text-decoration: underline;" href="{{ route('user.month', ['user' => $flat, 'month'=>$lastmonth->name]) }}">{{ $lastmonth->name }}</a></li>
+					@endforeach
+				</ul>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-7">
-				<div class="page-header">
+				<div class="page-header" style="margin: 0px;">
 					<h2 class="text-info" align="center">সকল মেম্বারদের বিস্তারিত তথ্য</h2>
+
 				</div>
-				<div class="page-header">
-					<h3 class="text-info">বর্তমান মিল রেট : {{number_format($meal_rate, 2)}} BDT</h3>
+				<div class="page-header" style="margin: 0px;">
+					<h3 class="text-info" style="color: crimson;">বর্তমান মিল রেট : {{number_format($meal_rate, 2)}} BDT</h3>
 				</div>
 				<table class="table">
 					<thead>
@@ -33,9 +48,9 @@
 								BDT
 							</td>
 							@if($mealDetailsPerMember->balancePlusOrMinusToBeGiven < 0)
-								<td class="danger">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
+								<td class="danger" title="ম্যানেজারকে দিবে">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@else
-								<td class="success">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
+								<td class="success" title="ম্যানেজার দিবে">{{number_format($mealDetailsPerMember->balancePlusOrMinusToBeGiven, 2)}} BDT</td>
 							@endif
 						</tr>
 					<?php $plus_minus_balancing += $mealDetailsPerMember->balancePlusOrMinusToBeGiven; ?>
@@ -52,7 +67,7 @@
 				</table>
 				<div class="page-header">
 					<h2 class="text-info" align="center"> চলতি মাসের বাজারের অবস্থা </h2>
-					<h4 class="text-info">মেস খরচ : {{ $monthCost }} BDT</h4>
+					<h4 class="text-info" title="{{ $month->notes }}">মেস (চাল ও অন্যান্য) খরচ : {{ $monthCost }} BDT</h4>
 				</div>
 				<table class="table">
 					<thead>
@@ -64,7 +79,7 @@
 					@foreach($bazars as $bazar)
 						<tr>
 							<td>{{$bazar->member->name}}</td>
-							<td>{{number_format($bazar->amount, 2)}}
+							<td>{{number_format($bazar->amount, 2)}} BDT
 								<?php 
 									if(!is_null(json_decode($bazar->details))){
 										$details = json_decode($bazar->details);
@@ -72,7 +87,7 @@
 										$details = $bazar->details;
 									}
                                  ?>
-								<button type="button" class="btn btn-secondary btn-xs example-popover" data-container="body" data-toggle="popover" data-placement="right"  data-content="{{ $details }}">
+								<button type="button" class="btn btn-secondary btn-xs example-popover no-print" data-container="body" data-toggle="popover" data-placement="right"  data-content="{{ $details }}">
 									Details
 								</button>
 							</td>
@@ -102,6 +117,7 @@
 						<button type="submit" class="btn btn-default">পেশ করুন</button>
 					</form>
 				</div>
+				@if($month->posts)
 				<div id="posts">
                     <?php $posts = $month->posts; ?>
 					@foreach($posts as $post)
@@ -111,13 +127,14 @@
 						</div>
 					@endforeach
 				</div>
+				@endif
 
 				<!-- </div> -->
 			</div>
 		</div>
 	</div>
 
-	<footer class="text-center"><i class="fa fa-heart"></i> Powered By <a target="_blank" href="https://www.MasiurSiddiki.com">www.MasiurSiddiki.com</a>  ---!---  Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.MasiurSiddiki.com/">Masiur</a> & <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> </footer>
+	<footer class="text-center">Powered By <i class="fa fa-heart" style="color: #dc4b48"></i> <a target="_blank" href="https://www.MasiurSiddiki.com">www.MasiurSiddiki.com</a> <br> Copyright ©2016 - {{ Date('Y') }} <a target="_blank" href="https://www.MasiurSiddiki.com/">Masiur</a> & <a target="_blank" href="https://www.linkedin.com/in/md-nayeem-iqubal/">Joy</a> </footer>
 
 @stop
 
@@ -128,7 +145,7 @@
                 container: 'body'
             })
         });
-        console.log({{ $mealDetailsAllMembers }});
+        // console.log({{ $mealDetailsAllMembers }});
         var baseUrl = '{{asset('/')}}';
         $(document).ready(function() {
 
