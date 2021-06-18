@@ -235,11 +235,24 @@ class MealCountController extends \BaseController
             $flat = Auth::user();
             $member = $mealcount->member;
             File::prepend(storage_path('logs/meal_bazar_of_'.$flat->id.'.log'), Date('Y-m-d h:m:s')." Meal Added ".$data['count'].
-                " for Member: ".$member->name.".".$mealcount->member_id ." of Month: ".$mealcount->month->name.".".$mealcount->month_id. " Under Flat:".$flat->flat_short_name.".".$flat->id."\n");
-            return Redirect::route('month.meal.index',[$data['month_id']])->with('success', "Added ".$data['count'].
-                " to ".$member->name." Successfully.");
+                " for Member: ".$member->name.".".$mealcount->member_id ." of Month: ".$mealcount->month->name.".".$mealcount->month_id.
+                " Under Flat:".$flat->flat_short_name.".".$flat->id."\n");
+
+//            return Redirect::route('month.meal.index',[$data['month_id']])->with('success', "Added ".$data['count'].
+//                " to ".$member->name." Successfully.");
+            return Response::json([
+                'code' => 200,
+                'success' => true,
+                'new_meal' => $mealcount->count,
+                'message' => "Added ".$data['count']. " to ".$member->name." Successfully."
+            ]);
+
         }
-        return Redirect::back()->with('error',"Something went wrong.Try again");
+        return Response::json([
+            'code' => 400,
+            'success' => false,
+            'message' => "Failed to Add ".$data['count']. " to ".$member->name.". Please, try again."
+        ]);
     }
 
 

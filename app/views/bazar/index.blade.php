@@ -14,6 +14,9 @@
 
                     </span>
                 </header>
+
+
+
                 <div class="panel-body">
                     <?php $month= Month::find($id) ?>
                     <h3>Bazar Details of Month/Session - <strong>{{ $month->name }}</strong></h3>

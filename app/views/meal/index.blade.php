@@ -13,6 +13,7 @@
 
                     </span>
                 </header>
+
                 <div class="panel-body" style="overflow-x: scroll!important;">
                     <?php $month= Month::find($id) ?>
                     <h3>Meal Details of Month/Session - <strong>{{ $month->name }}</strong></h3>
@@ -37,13 +38,12 @@
                             @foreach($mealcounts as $mealcount)
                                 <tr>
                                     <td> {{ $count++ }}</td>
-                                    <td>{{ $mealcount->member->name }}</td>
-                                    <td>{{ $mealcount->count }}
-                                    <a class="btn btn-xs btn-success btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 1, 'month_id' => $mealcount->month_id)) }}">+1</a>
-                                    <a class="btn btn-xs btn-danger btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => -1, 'month_id' => $mealcount->month_id)) }}">-1</a>
-                                    <a class="btn btn-xs btn-info btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 2, 'month_id' => $mealcount->month_id)) }}">+2</a>
-                                   
-                                    <a class="btn btn-xs btn-warning btn-edit" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 5, 'month_id' => $mealcount->month_id)) }}">+5</a>
+                                    <td>{{ $mealcount->member->name }} </td>
+                                    <td ><span class="updatedNewMeal">{{ $mealcount->count }}</span>
+                                        <a class="btn btn-xs btn-success btn-edit meal-update-btn" mealId="{{ $mealcount->id }}" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 1, 'month_id' => $mealcount->month_id)) }}">+1</a>
+                                        <a class="btn btn-xs btn-danger btn-edit meal-update-btn" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => -1, 'month_id' => $mealcount->month_id)) }}">-1</a>
+                                        <a class="btn btn-xs btn-info btn-edit meal-update-btn" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 2, 'month_id' => $mealcount->month_id)) }}">+2</a>
+                                        <a class="btn btn-xs btn-warning btn-edit meal-update-btn" href="{{ URL::route('month.meal.increment', array('id' => $mealcount->id, 'count' => 5, 'month_id' => $mealcount->month_id)) }}">+5</a>
                                     </td>
                                     
                                     <td>{{ $mealcount->balance }}</td>
@@ -136,6 +136,37 @@
             // $('#example').dataTable({
             //     "pageLength": 50
             // });
+            // function changeHtml(response) {
+            //     $("#flashmessage").text('lkdfkd');
+            // }
+            $(document).on("click", ".meal-update-btn", function(e) {
+                e.preventDefault();
+                let mealCountElementTD = $(this).parent();
+                let mealUpdateUrl = $(this).attr('href');
+
+                console.log(mealUpdateUrl);
+                $.ajax({
+                    type: "GET",
+                    url: mealUpdateUrl,
+                    success: function (response) {
+                        console.log(response);
+                        // console.log(elem);
+
+                        // console.log(pp);
+                        mealCountElementTD.children("span.updatedNewMeal").text(response.new_meal);
+                        // $('#success').html(`<span style="color:green">kfdjfkdjfk</span>`);
+                        // changeHtml(response);
+
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        // $("span#success").html(`<span style="color:darkred">${response.message}</span>`);
+                    }
+
+                })
+            });
+
+
 
             $(document).on("click", ".deleteBtn", function() {
                 var deleteId = $(this).attr('deleteId');

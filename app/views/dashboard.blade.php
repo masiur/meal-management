@@ -25,7 +25,8 @@
                                 <tr>
                                     <td> {{ $count++ }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-success btn-show" href="{{ URL::route('user.month', array('month' => $month->name, 'user' => Auth::user()->flat_short_name )) }}">{{ $month->name }}</a>
+                                        <a class="btn btn-xs btn-default btn-show" href="{{ URL::route('user.month', array('month' => $month->name, 'user' => Auth::user()->flat_short_name )) }}">{{ $month->name }}</a>
+                                        <a title="Go to Meal Details" class="btn btn-xs btn-primary btn-show" href="{{ URL::route('month.meal.index', array('id' => $month->id)) }}"> Meal Details</a>
                                     </td>
                                     <td>{{ $month->cost }}</td>
                                     <td>{{ $month->start_time }}</td>
