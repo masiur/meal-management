@@ -26,7 +26,8 @@ class BazarController extends \BaseController {
 	 */
 	public function create($id)
 	{
-		$members = Member::where('user_id', Auth::user()->id)->lists('name', 'id');
+		$particularMonthMember = MealCount::whereMonthId($id)->lists('member_id');
+		$members = Member::whereIn('id', $particularMonthMember)->lists('name', 'id');
 		return View::make('bazar.create')
 				->with('title','Create Bazars')->with('members',$members)
 				->with('id',$id);
