@@ -132,9 +132,48 @@ class MemberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function sendSMS()
 	{
-		//
-	}
+	    $input =  \Illuminate\Support\Facades\Input::all();
+         $recipientIds = unserialize(base64_decode($input['recipients']));
+          $members = Member::whereIn('id', $recipientIds)->get();
+//
+        $smsText = $input['sms_text'];
+        $counter = 1;
+        foreach ($members as $recipient) {
+            if($counter > 1) {
+                break;
+            }
+            if(strlen($recipient->mobile) >= 11) {
+                $text = "Dear ".$recipient->name.", ".$smsText." - C1 Meal System.";
+                $this->sendMessageByNumberAndText($recipient->mobile, $text);
+            }
+            $counter++;
+
+        }
+        return Redirect::route('month.meal.index',[$input['month_id']])->with('success', "SMS sent to Members of this month successfully.");
+
+    }
+
+    public function sendMessageByNumberAndText($number, $text)
+    {
+        try{
+            $soapClient = new SoapClient("https://api2.onnorokomSMS.com/sendSMS.asmx?wsdl");
+            $paramArray = array(
+                'userName' => "01711107915",
+                'userPassword' => "17111",
+                'mobileNumber' => $number,
+                'smsText' => $text,
+                'smsType' => "TEXT",
+                'maskName' => '',
+                'campaignName' => '',
+            );
+            $value = $soapClient->__call('OneToOne', [$paramArray]);
+//            echo $value->OneToOneResult;
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 
 }

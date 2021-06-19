@@ -7,10 +7,13 @@ class MealCountController extends \BaseController
     {
         $mealcounts = MealCount::with(['member'])->whereMonthId($id)->paginate(20);
 
+//        return $mealcounts;
+
         return View::make('meal.index')
             ->with('title', 'Meal Entry/Update Page')
             ->with('mealcounts', $mealcounts)
             ->with('id', $id);
+
     }
 
     public function create($id)

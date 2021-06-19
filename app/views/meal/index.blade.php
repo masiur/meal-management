@@ -71,6 +71,43 @@
                         No Data Found
                     @endif
                 </div>
+
+                <div class="panel-body col-md-12">
+                    SMS To all
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                                $count=1;
+                                $toBeSMSedArray = [];
+
+                            ?>
+                            <ol>
+                                @foreach($mealcounts as $mealcount)
+                                    <?php $count++;
+
+                                        $toBeSMSedArray[] = $mealcount->member_id;
+                                    ?>
+
+                                    <li>{{ $mealcount->member->name }} - {{ $mealcount->member->mobile }} - {{ $mealcount->member->email }}</li>
+                                @endforeach
+                            </ol>
+                        </div>
+                        <?php $recipients = base64_encode(serialize($toBeSMSedArray)); ?>
+                        <div class="col-md-6">
+                            <form method="POST" action="{{ route('send.bulk.sms', ['month_id' => $id]) }}">
+                                <p>Dear $name</p>
+                                <textarea class="form-control"  name="sms_text" rows="8" cols="50" maxlength="320" placeholder="Enter SMS text... upto 320 chars"></textarea>
+                                <p>C1 Meal System.</p>
+                                <input type="hidden" value="{{ $recipients }}" name="recipients">
+                                <div class="col-lg-4">
+                                    <input class="btn btn-primary" type="submit" value="Send SMS to All">
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     </div>

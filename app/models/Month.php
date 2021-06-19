@@ -8,4 +8,14 @@ class Month extends \Eloquent {
         return $this->hasMany('Post');
     }
 
+    public function mealCounts()
+    {
+        return $this->hasMany('MealCount');
+    }
+
+    public function mealCounts2()
+    {
+        return $this->hasMany('MealCount')->with('member');
+    }
+
 }

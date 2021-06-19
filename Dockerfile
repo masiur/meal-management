@@ -7,10 +7,11 @@ RUN apt-get update && apt-get install -y \
 		zip \
 		git \
 		unzip \
+		libxml2-dev \
 		&& docker-php-ext-install -j$(nproc) iconv mcrypt
 
 
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql soap
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -25,7 +26,11 @@ RUN a2enmod rewrite
 #ADD ./public /var/www/html
 #WORKDIR /var/www/html/
 
-composer update
+#RUN composer update
 
-RUN chmod 777 -R app/storage
-RUN chmod 777 -R public
+#RUN chmod 777 -R app/storage
+#RUN chmod 777 -R public
+
+
+
+#USER www-data

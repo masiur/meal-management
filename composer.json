@@ -10,7 +10,7 @@
 		"guzzlehttp/guzzle": "~4.0",
 		"phpmailer/phpmailer": "~6.2",
 		"barryvdh/laravel-dompdf": "0.4.*"
-	},
+    },
 	"require-dev": {
     	"way/generators": "~2.0",
     	"fzaninotto/faker": "1.5.*@dev"

@@ -47,4 +47,11 @@
                         No Data Found
                     @endif
                 </div>
+
+
+        <div>
+            Send Notice Via SMS to All.
+
+
+        </div>
 @stop

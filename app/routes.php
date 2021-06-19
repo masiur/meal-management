@@ -90,6 +90,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::delete('user/delete/{id}', array('as' => 'user.delete', 'uses' => 'FlatController@destory'));
 
 
+
+	Route::post('send/bulk/sms', array('as' => 'send.bulk.sms', 'uses' => 'MemberController@sendSMS'));
+
+
 	// Bill View (Meal)
     
 
