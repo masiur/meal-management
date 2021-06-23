@@ -141,9 +141,9 @@ class MemberController extends \BaseController {
         $smsText = $input['sms_text'];
         $counter = 1;
         foreach ($members as $recipient) {
-            if($counter > 1) {
-                break;
-            }
+//            if($counter > 1) {
+//                break;
+//            }
             if(strlen($recipient->mobile) >= 11) {
                 $text = "Dear ".$recipient->name.", ".$smsText." - C1 Meal System.";
                 $this->sendMessageByNumberAndText($recipient->mobile, $text);
